@@ -1,0 +1,5 @@
+[Unit]
+Description=Check periodically that the proper scaling governor is used
+
+[Service]
+ExecStart=/usr/sbin/frequency-scaling

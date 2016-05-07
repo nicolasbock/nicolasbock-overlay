@@ -1,0 +1,37 @@
+#!/bin/bash
+
+BASEDIR=/sys/devices/system/cpu/cpufreq
+
+if [[ ! -d "${BASEDIR}" ]]; then
+    logger "no frequency scaling support detected"
+fi
+
+logger "checking power"
+for d in $(find /sys/devices -type d -name 'power_supply'); do
+    if [[ -f "${d}"/AC/online ]]; then
+        ac_online=$(cat "${d}"/AC/online)
+    fi
+done
+if [[ ${ac_online} == "1" ]]; then
+    logger "AC power connected"
+    wanted_governor=conservative
+elif [[ ${ac_online} == "0" ]]; then
+    logger "AC power disconnected"
+    wanted_governor=powersave
+else
+    logger "can not find power information"
+    exit 0
+fi
+
+logger "checking scaling governors"
+for d in "${BASEDIR}"/policy?; do
+    if [[ -f "${d}"/scaling_governor ]]; then
+        governor=$(cat "${d}"/scaling_governor)
+        if [[ "${governor}" != "${wanted_governor}" ]]; then
+            logger "updating ${governor} to ${wanted_governor}"
+            echo "${wanted_governor}" > "${d}"/scaling_governor
+        else
+            logger "governor correctly set to ${governor}"
+        fi
+    fi
+done
