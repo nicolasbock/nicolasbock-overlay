@@ -11,7 +11,7 @@ KEYWORDS="~amd64"
 IUSE=""
 
 RDEPEND="
-	app-editors/nano
+	app-admin/sudo
 	app-editors/vim
 	app-emulation/docker
 	app-emulation/virt-manager
@@ -66,7 +66,6 @@ RDEPEND="
 	sys-power/frequency-scaling
 	sys-power/powertop
 	sys-process/htop
-	app-admin/sudo
 	sys-process/lsof
 	sys-process/systemd-cron
 	"
