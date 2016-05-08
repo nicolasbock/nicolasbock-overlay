@@ -5,9 +5,7 @@
 EAPI=5
 
 DESCRIPTION="Virtual for all base packages"
-HOMEPAGE="https://github.com/nicolasbock/nicolasbock-overlay"
 
-LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
