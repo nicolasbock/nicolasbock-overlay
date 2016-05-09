@@ -18,6 +18,7 @@ RDEPEND="
 	app-text/texlive
 	dev-util/osc
 	dev-vcs/qgit
+	gnome-base/gnome
 	mail-client/thunderbird-bin
 	media-gfx/gimp
 	media-sound/mumble
