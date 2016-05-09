@@ -2,5 +2,9 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 	<longdescription lang="en">
+		Metapackage for some apps.
 	</longdescription>
+	<maintainer>
+		<email>nicolasbock@gmail.com</email>
+	</maintainer>
 </pkgmetadata>
