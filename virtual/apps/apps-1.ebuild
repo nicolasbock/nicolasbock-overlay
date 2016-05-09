@@ -15,6 +15,7 @@ RDEPEND="
 	app-editors/gvim
 	app-office/gnucash
 	app-office/libreoffice-bin
+	app-text/aspell[linguas_en,linguas_de]
 	app-text/texlive
 	dev-util/osc
 	dev-vcs/qgit
