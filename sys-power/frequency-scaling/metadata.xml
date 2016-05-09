@@ -2,5 +2,9 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 	<longdescription lang="en">
+		Scripts to adjust and maintain the correct CPU frequency scaling governor.
 	</longdescription>
+	<maintainer>
+		<email>nicolasbock@gmail.com</email>
+	</maintainer>
 </pkgmetadata>

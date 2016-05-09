@@ -2,8 +2,8 @@
 Description=Check periodically that the proper scaling governor is used
 
 [Timer]
-OnBootSec=5m
-OnUnitActiveSec=15m
+OnBootSec=2m
+OnUnitActiveSec=5m
 
 [Install]
 WantedBy=timers.timer
