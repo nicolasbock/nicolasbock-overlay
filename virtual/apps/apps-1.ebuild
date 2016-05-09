@@ -16,7 +16,7 @@ RDEPEND="
 	app-office/gnucash
 	app-office/libreoffice-bin
 	app-text/aspell[linguas_en,linguas_de]
-	app-text/texlive
+	app-text/texlive[epspdf,extra,graphics,omega,pstricks,publishers,science]
 	dev-util/osc
 	dev-vcs/qgit
 	gnome-base/gnome

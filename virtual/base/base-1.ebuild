@@ -12,8 +12,8 @@ IUSE=""
 
 RDEPEND="
 	app-admin/sudo
-	app-editors/vim
-	app-emulation/docker
+	app-editors/vim[cscope,python,ruby]
+	app-emulation/docker[btrfs]
 	app-emulation/virt-manager
 	app-misc/evtest
 	app-misc/tmate
@@ -32,9 +32,7 @@ RDEPEND="
 	app-vim/vim-spell-en
 	dev-lang/go
 	dev-lang/ruby
-	dev-python/ipython
-	dev-python/matplotlib
-	dev-python/numpy
+	dev-python/ipython[matplotlib,notebook]
 	dev-python/pandas
 	dev-python/pep8
 	dev-util/indent
@@ -49,23 +47,23 @@ RDEPEND="
 	media-fonts/wqy-zenhei
 	media-sound/pavucontrol
 	net-firewall/ebtables
-	net-misc/networkmanager
+	net-misc/networkmanager[resolvconf]
 	net-misc/networkmanager-openconnect
 	net-misc/networkmanager-openvpn
 	net-wireless/rfkill
-	sci-libs/scipy
+	sci-libs/scipy[sparse]
 	sys-apps/pciutils
 	sys-apps/usbutils
-	sys-boot/grub
+	sys-boot/grub[device-mapper]
 	sys-boot/syslinux
 	sys-boot/unetbootin
 	sys-firmware/iwl7260-ucode
 	sys-fs/dosfstools
-	sys-kernel/genkernel-next
+	sys-kernel/genkernel-next[cryptsetup]
 	sys-kernel/vanilla-sources
 	sys-power/frequency-scaling
 	sys-power/powertop
 	sys-process/htop
 	sys-process/lsof
-	sys-process/systemd-cron
+	sys-process/systemd-cron[python_single_target_python3_4]
 	"
