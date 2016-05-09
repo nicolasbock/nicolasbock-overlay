@@ -19,6 +19,6 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 pkg_preinst() {
-	insinto /etc/kernels
+	insinto /etc/kernel-configs
 	doins "${FILESDIR}"/kernel-config-x86_64-4.5.3
 }
