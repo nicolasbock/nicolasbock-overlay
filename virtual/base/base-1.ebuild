@@ -25,7 +25,7 @@ RDEPEND="
 	app-portage/layman
 	app-portage/mirrorselect
 	app-shells/bash-completion
-	app-vim/command-t
+	>=app-vim/command-t-3.0
 	app-vim/eruby-syntax
 	app-vim/fugitive
 	app-vim/gnupg

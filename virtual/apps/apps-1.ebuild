@@ -12,7 +12,7 @@ IUSE=""
 
 RDEPEND="
 	app-crypt/keybase
-	app-editors/gvim
+	app-editors/gvim[cscope,python,ruby]
 	app-office/gnucash
 	app-office/libreoffice-bin
 	app-text/aspell[linguas_en,linguas_de]
