@@ -3,7 +3,7 @@ Description=Check periodically that the proper scaling governor is used
 
 [Timer]
 OnBootSec=2m
-OnUnitActiveSec=5m
+OnCalendar=5m
 
 [Install]
-WantedBy=timers.timer
+WantedBy=multi-user.target
