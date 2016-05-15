@@ -1,5 +1,11 @@
 #!/bin/sh
 
+set_governors() {
+    for (( i = 0; i < 4; i++ )); do
+        echo ${1} > /sys/devices/system/cpu/cpu${i}/cpufreq/scaling_governor
+    done
+}
+
 set $*
 
 group=${1%%/*}
@@ -24,10 +30,7 @@ case "$group" in
             #	;;
         *0)
             logger "setting governors to powersave"
-            echo "powersave" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-            echo "powersave" > /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor
-            echo "powersave" > /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor
-            echo "powersave" > /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor
+            set_governors "powersave"
             ;;
 
             # Add code here to handle when the system is plugged in
@@ -39,10 +42,7 @@ case "$group" in
             #	;;
         *1)
             logger "setting governors to conservative"
-            echo "conservative" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-            echo "conservative" > /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor
-            echo "conservative" > /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor
-            echo "conservative" > /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor
+            set_governors "conservative"
             ;;
 
         *)	log_unhandled $* ;;
