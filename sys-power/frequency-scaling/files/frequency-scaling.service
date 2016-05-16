@@ -2,4 +2,4 @@
 Description=Check periodically that the proper scaling governor is used
 
 [Service]
-ExecStart=/usr/sbin/frequency-scaling
+ExecStart=/usr/bin/frequency-scaling
