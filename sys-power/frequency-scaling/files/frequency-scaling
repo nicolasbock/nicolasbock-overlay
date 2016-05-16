@@ -8,15 +8,15 @@ fi
 
 if [[ $# -ge 1 ]]; then
     case "${1}" in
-        "--help")
+        "-h"|"--help")
             cat <<EOF
 Usage
 
 Options:
---help      This help
+-h | --help     This help
 
 Commands:
-list        Show the currently active governors
+list            Show the currently active governors
 EOF
             exit 0
             ;;
