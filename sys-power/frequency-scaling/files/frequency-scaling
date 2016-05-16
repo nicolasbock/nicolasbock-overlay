@@ -6,6 +6,33 @@ if [[ ! -d "${BASEDIR}" ]]; then
     logger "no frequency scaling support detected"
 fi
 
+if [[ $# -ge 1 ]]; then
+    case "${1}" in
+        "--help")
+            cat <<EOF
+Usage
+
+Options:
+--help      This help
+
+Commands:
+list        Show the currently active governors
+EOF
+            exit 0
+            ;;
+        "list")
+            for d in "${BASEDIR}"/policy?; do
+                cat "${d}/scaling_governor"
+            done
+            exit 0
+            ;;
+        *)
+            echo "unknown command line option"
+            exit 1
+            ;;
+    esac
+fi
+
 logger --priority user.debug "checking power"
 for d in $(find /sys/devices -type d -name 'power_supply'); do
     if [[ -f "${d}"/AC/online ]]; then
