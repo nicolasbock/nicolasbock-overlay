@@ -34,10 +34,10 @@ EOF
 fi
 
 # Figure out what governor is currently being used.
-echo "checking power"
+echo "checking power supply status"
 for d in $(find /sys/devices -type d -name 'power_supply'); do
     if [[ -r "${d}"/AC/online ]]; then
-        ac_online=$(cat "${d}"/AC/online)
+        read -r ac_online < "${d}"/AC/online
     fi
 done
 if [[ ${ac_online} == "1" ]]; then
@@ -79,13 +79,21 @@ fi
 
 echo "checking scaling governors"
 for d in "${BASEDIR}"/policy?; do
+    if [[ -r "${d}"/scaling_governor ]]; then
+        read -r governor < "${d}"/scaling_governor
+    else
+        echo "can not read current scaling governor"
+        break
+    fi
     if [[ -w "${d}"/scaling_governor ]]; then
-        governor=$(cat "${d}"/scaling_governor)
         if [[ "${governor}" != "${wanted_governor}" ]]; then
             echo "updating ${governor} to ${wanted_governor}"
             echo "${wanted_governor}" > "${d}"/scaling_governor
         else
-            echo "governor correctly set to ${governor}"
+            echo "governor already correctly set to ${governor}"
         fi
+    else
+        echo "can not set scaling governor"
+        break
     fi
 done
