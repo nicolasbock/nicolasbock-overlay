@@ -33,9 +33,10 @@ EOF
     esac
 fi
 
+# Figure out what governor is currently being used.
 logger --priority user.debug "checking power"
 for d in $(find /sys/devices -type d -name 'power_supply'); do
-    if [[ -f "${d}"/AC/online ]]; then
+    if [[ -r "${d}"/AC/online ]]; then
         ac_online=$(cat "${d}"/AC/online)
     fi
 done
@@ -48,6 +49,35 @@ elif [[ ${ac_online} == "0" ]]; then
 else
     logger --priority user.error "can not find power information"
     exit 0
+fi
+
+# Check into the battery.
+logger --priority user.debug "checking batter levels"
+energy_full_design="unknown"
+energy_full="unknown"
+energy_now="unknown"
+for d in $(find /sys/devices -type d -iname '*bat*'); do
+    if [[ -r "${d}"/energy_full_design ]]; then
+        read -r energy_full_design < "${d}"/energy_full_design
+    fi
+    if [[ -r "${d}"/energy_full ]]; then
+        read -r energy_full < "${d}"/energy_full
+    fi
+    if [[ -r "${d}"/energy_now ]]; then
+        read -r energy_now < "${d}"/energy_now
+    fi
+done
+if [[ ${energy_now} != "unknown" ]]; then
+    echo "energy_now         = ${energy_now}"
+    logger --priority user.info "energy_now         = ${energy_now}"
+fi
+if [[ ${energy_full} != "unknown" ]]; then
+    echo "energy_full        = ${energy_full}"
+    logger --priority user.info "energy_full        = ${energy_full}"
+fi
+if [[ ${energy_full_design} != "unknown" ]]; then
+    echo "energy_full_design = ${energy_full_design}"
+    logger --priority user.info "energy_full_design = ${energy_full_design}"
 fi
 
 logger --priority user.debug "checking scaling governors"
