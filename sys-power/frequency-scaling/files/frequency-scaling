@@ -3,7 +3,7 @@
 BASEDIR=/sys/devices/system/cpu/cpufreq
 
 if [[ ! -d "${BASEDIR}" ]]; then
-    logger "no frequency scaling support detected"
+    echo "no frequency scaling support detected"
 fi
 
 if [[ $# -ge 1 ]]; then
@@ -34,25 +34,25 @@ EOF
 fi
 
 # Figure out what governor is currently being used.
-logger --priority user.debug "checking power"
+echo "checking power"
 for d in $(find /sys/devices -type d -name 'power_supply'); do
     if [[ -r "${d}"/AC/online ]]; then
         ac_online=$(cat "${d}"/AC/online)
     fi
 done
 if [[ ${ac_online} == "1" ]]; then
-    logger --priority user.debug "AC power connected"
+    echo "AC power connected"
     wanted_governor=conservative
 elif [[ ${ac_online} == "0" ]]; then
-    logger --priority user.debug "AC power disconnected"
+    echo "AC power disconnected"
     wanted_governor=powersave
 else
-    logger --priority user.error "can not find power information"
+    echo "can not find power information"
     exit 0
 fi
 
 # Check into the battery.
-logger --priority user.debug "checking batter levels"
+echo "checking batter levels"
 energy_full_design="unknown"
 energy_full="unknown"
 energy_now="unknown"
@@ -69,26 +69,23 @@ for d in $(find /sys/devices -type d -iname '*bat*'); do
 done
 if [[ ${energy_now} != "unknown" ]]; then
     echo "energy_now         = ${energy_now}"
-    logger --priority user.info "energy_now         = ${energy_now}"
 fi
 if [[ ${energy_full} != "unknown" ]]; then
     echo "energy_full        = ${energy_full}"
-    logger --priority user.info "energy_full        = ${energy_full}"
 fi
 if [[ ${energy_full_design} != "unknown" ]]; then
     echo "energy_full_design = ${energy_full_design}"
-    logger --priority user.info "energy_full_design = ${energy_full_design}"
 fi
 
-logger --priority user.debug "checking scaling governors"
+echo "checking scaling governors"
 for d in "${BASEDIR}"/policy?; do
     if [[ -w "${d}"/scaling_governor ]]; then
         governor=$(cat "${d}"/scaling_governor)
         if [[ "${governor}" != "${wanted_governor}" ]]; then
-            logger --priority user.debug "updating ${governor} to ${wanted_governor}"
+            echo "updating ${governor} to ${wanted_governor}"
             echo "${wanted_governor}" > "${d}"/scaling_governor
         else
-            logger --priority user.debug "governor correctly set to ${governor}"
+            echo "governor correctly set to ${governor}"
         fi
     fi
 done
