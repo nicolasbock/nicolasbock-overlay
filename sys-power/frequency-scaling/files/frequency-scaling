@@ -52,7 +52,7 @@ fi
 
 logger --priority user.debug "checking scaling governors"
 for d in "${BASEDIR}"/policy?; do
-    if [[ -f "${d}"/scaling_governor ]]; then
+    if [[ -w "${d}"/scaling_governor ]]; then
         governor=$(cat "${d}"/scaling_governor)
         if [[ "${governor}" != "${wanted_governor}" ]]; then
             logger --priority user.debug "updating ${governor} to ${wanted_governor}"
