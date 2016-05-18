@@ -75,6 +75,8 @@ if [[ ${energy_full} != "unknown" ]]; then
 fi
 if [[ ${energy_full_design} != "unknown" ]]; then
     echo "energy_full_design = ${energy_full_design}"
+    battery_health=$(( 100 * ${energy_full} / ${energy_full_design} ))
+    echo "battery health     = ${battery_health}%"
 fi
 
 echo "checking scaling governors"
