@@ -28,5 +28,9 @@ pkg_preinst() {
 	newins "${FILESDIR}/acpi_ac_event" ac_event
 	exeinto /etc/acpi/actions
 	newexe "${FILESDIR}/acpi_ac_action.sh" ac_action.sh
-	elog "Don't forget to run systemctl daemon-reload"
+	elog "After first installing, enable with"
+	elog "systemctl enable ${PN}.timer"
+	elog "On updates, run"
+	elog "systemctl daemon-reload"
+	elog "systemctl reenable ${PN}.timer"
 }
