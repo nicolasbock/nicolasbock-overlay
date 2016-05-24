@@ -43,9 +43,11 @@ done
 if [[ ${ac_online} == "1" ]]; then
     echo "AC power connected"
     wanted_governor=conservative
+    wanted_cpus=all
 elif [[ ${ac_online} == "0" ]]; then
     echo "AC power disconnected"
     wanted_governor=powersave
+    wanted_cpus=1
 else
     echo "can not find power information"
     exit 0
@@ -77,6 +79,25 @@ if [[ ${energy_full_design} != "unknown" ]]; then
     echo "energy_full_design = ${energy_full_design}"
     battery_health=$(( 100 * ${energy_full} / ${energy_full_design} ))
     echo "battery health     = ${battery_health}%"
+fi
+
+if [[ "${wanted_cpus}" == "all" ]]; then
+    for c in /sys/devices/system/cpu/cpu?/online; do
+        echo "1" > "${c}"
+    done
+else
+    cpu_online=0
+    for c in /sys/devices/system/cpu/cpu?/online; do
+        echo "checking cpu at ${c}"
+        if [[ ${cpu_online} -lt ${wanted_cpus} || ${wanted_cpus} = "all" ]]; then
+            echo "turning on cpu${cpu_online}"
+            echo "1" > "${c}"
+        else
+            echo "turning off cpu${cpu_online}"
+            echo "0" > "${c}"
+        fi
+        cpu_online=$(( ${cpu_online} + 1 ))
+    done
 fi
 
 echo "checking scaling governors"
