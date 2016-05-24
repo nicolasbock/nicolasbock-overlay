@@ -82,8 +82,11 @@ if [[ ${energy_full_design} != "unknown" ]]; then
 fi
 
 if [[ "${wanted_cpus}" == "all" ]]; then
+    cpu_online=0
     for c in /sys/devices/system/cpu/cpu?/online; do
+        echo "turning on cpu${cpu_online}"
         echo "1" > "${c}"
+        cpu_online=$(( ${cpu_online} + 1 ))
     done
 else
     cpu_online=0
