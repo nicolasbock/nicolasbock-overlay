@@ -29,8 +29,7 @@ case "$group" in
             #	cpufreq-set -g powersave
             #	;;
         *0)
-            logger "setting governors to powersave"
-            set_governors "powersave"
+            /usr/bin/frequency-scaling
             ;;
 
             # Add code here to handle when the system is plugged in
@@ -41,8 +40,7 @@ case "$group" in
             #	cpufreq-set -g performance
             #	;;
         *1)
-            logger "setting governors to conservative"
-            set_governors "conservative"
+            /usr/bin/frequency-scaling
             ;;
 
         *)	log_unhandled $* ;;
