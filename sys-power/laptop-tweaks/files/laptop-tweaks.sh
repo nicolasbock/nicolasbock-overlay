@@ -1,0 +1,33 @@
+#!/bin/bash
+
+#echo '1' > '/sys/module/snd_hda_intel/parameters/power_save'
+#echo 'auto' > '/sys/bus/usb/devices/*/power/control'
+#echo 'auto' > '/sys/class/scsi_host/host?/power/control'
+#echo 'min_power' > '/sys/class/scsi_host/host0/link_power_management_policy'
+
+print_and_set() {
+    echo -n "$1: "
+    cat "$1"
+    echo "$2" > "$1"
+}
+
+#for c in /sys/class/scsi_host/*/power/control; do
+#    #print_and_set "$c" 'on'
+#    print_and_set "$c" "auto"
+#done
+for c in /sys/bus/usb/devices/*/power/control; do
+    #print_and_set "$c" "on"
+    print_and_set "$c" "auto"
+done
+for c in /sys/class/scsi_host/host?/link_power_management_policy; do 
+    print_and_set "$c" "min_power"
+    #print_and_set "$c" ""
+done
+for c in /sys/bus/pci/devices/*/power/control; do
+    print_and_set "$c" "auto"
+done
+print_and_set /sys/module/snd_hda_intel/parameters/power_save "1"
+if [[ -x /sbin/ethtool ]]; then
+    /sbin/ethtool -s enp0s25 wol d
+fi
+print_and_set /proc/sys/vm/dirty_writeback_centisecs "1500"
