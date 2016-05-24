@@ -1,15 +1,22 @@
 #!/bin/bash
 
-BASEDIR=/sys/devices/system/cpu/cpufreq
+get_ac_status() {
+    for d in $(find /sys/devices -type d -name 'power_supply'); do
+        if [[ -r "${d}"/AC/online ]]; then
+            read -r ac_online < "${d}"/AC/online
+        fi
+    done
+    echo "${ac_online}"
+}
 
-if [[ ! -d "${BASEDIR}" ]]; then
-    echo "no frequency scaling support detected"
-fi
+print_scaling_governors() {
+    for d in "${BASEDIR}"/policy?; do
+        cat "${d}/scaling_governor"
+    done
+}
 
-if [[ $# -ge 1 ]]; then
-    case "${1}" in
-        "-h"|"--help")
-            cat <<EOF
+print_help() {
+    cat <<EOF
 Usage
 
 Options:
@@ -18,12 +25,104 @@ Options:
 Commands:
 list            Show the currently active governors
 EOF
+}
+
+print_battery_stats() {
+    local energy_full_design="unknown"
+    local energy_full="unknown"
+    local energy_now="unknown"
+    for d in $(find /sys/devices -type d -iname '*bat*'); do
+        if [[ -r "${d}"/energy_full_design ]]; then
+            read -r energy_full_design < "${d}"/energy_full_design
+        fi
+        if [[ -r "${d}"/energy_full ]]; then
+            read -r energy_full < "${d}"/energy_full
+        fi
+        if [[ -r "${d}"/energy_now ]]; then
+            read -r energy_now < "${d}"/energy_now
+        fi
+    done
+    if [[ ${energy_now} != "unknown" ]]; then
+        echo "energy_now         = ${energy_now}"
+    fi
+    if [[ ${energy_full} != "unknown" ]]; then
+        echo "energy_full        = ${energy_full}"
+    fi
+    if [[ ${energy_full_design} != "unknown" ]]; then
+        echo "energy_full_design = ${energy_full_design}"
+        battery_health=$(( 100 * ${energy_full} / ${energy_full_design} ))
+        echo "battery health     = ${battery_health}%"
+    fi
+}
+
+get_number_cpus() {
+    local number_cpus=0
+    for c in /sys/devices/system/cpu/cpu?; do
+        number_cpus=$(( ${number_cpus} + 1 ))
+    done
+    echo ${number_cpus}
+}
+
+turn_on_cpu() {
+    if [[ ${1} -gt 0 ]]; then
+        echo "turning on cpu${1}"
+        echo "1" > "/sys/devices/system/cpu/cpu${1}/online"
+    fi
+}
+
+turn_off_cpu() {
+    if [[ ${1} -gt 0 ]]; then
+        echo "turning on cpu${1}"
+        echo "0" > "/sys/devices/system/cpu/cpu${1}/online"
+    fi
+}
+
+is_cpu_online() {
+    cat /sys/devices/system/cpu/cpu${1}/online
+}
+
+activate_cpus() {
+    for (( c = 0; c < ${wanted_cpus}; c++ )); do
+        turn_on_cpu ${c}
+    done
+    for (( c = ${wanted_cpus}; c < $(get_number_cpus); c++ )); do
+        turn_off_cpu ${c}
+    done
+}
+
+adjust_scaling_governor() {
+    for (( c = 0; c < ${wanted_cpus}; c++ )); do
+        d="/sys/devices/system/cpu/cpu${c}/cpufreq/scaling_governor"
+        if [[ -r "${d}" ]]; then
+            read -r governor < "${d}"
+        else
+            echo "can not read current scaling governor on cpu ${c}"
+            break
+        fi
+        if [[ -w "${d}" ]]; then
+            if [[ "${governor}" != "${wanted_governor}" ]]; then
+                echo "updating ${governor} to ${wanted_governor} on cpu ${c}"
+                echo "${wanted_governor}" > "${d}"
+            else
+                echo "governor already correctly set to ${governor} on cpu ${c}"
+            fi
+        else
+            echo "can not set scaling governor"
+            break
+        fi
+    done
+}
+
+BASEDIR=/sys/devices/system/cpu/cpufreq
+
+if [[ $# -ge 1 ]]; then
+    case "${1}" in
+        "-h"|"--help")
+            print_help
             exit 0
             ;;
         "list")
-            for d in "${BASEDIR}"/policy?; do
-                cat "${d}/scaling_governor"
-            done
+            print_scaling_governors
             exit 0
             ;;
         *)
@@ -33,17 +132,12 @@ EOF
     esac
 fi
 
-# Figure out what governor is currently being used.
-echo "checking power supply status"
-for d in $(find /sys/devices -type d -name 'power_supply'); do
-    if [[ -r "${d}"/AC/online ]]; then
-        read -r ac_online < "${d}"/AC/online
-    fi
-done
+ac_online=$(get_ac_status)
+
 if [[ ${ac_online} == "1" ]]; then
     echo "AC power connected"
     wanted_governor=conservative
-    wanted_cpus=all
+    wanted_cpus=$(get_number_cpus)
 elif [[ ${ac_online} == "0" ]]; then
     echo "AC power disconnected"
     wanted_governor=powersave
@@ -53,73 +147,6 @@ else
     exit 0
 fi
 
-# Check into the battery.
-echo "checking batter levels"
-energy_full_design="unknown"
-energy_full="unknown"
-energy_now="unknown"
-for d in $(find /sys/devices -type d -iname '*bat*'); do
-    if [[ -r "${d}"/energy_full_design ]]; then
-        read -r energy_full_design < "${d}"/energy_full_design
-    fi
-    if [[ -r "${d}"/energy_full ]]; then
-        read -r energy_full < "${d}"/energy_full
-    fi
-    if [[ -r "${d}"/energy_now ]]; then
-        read -r energy_now < "${d}"/energy_now
-    fi
-done
-if [[ ${energy_now} != "unknown" ]]; then
-    echo "energy_now         = ${energy_now}"
-fi
-if [[ ${energy_full} != "unknown" ]]; then
-    echo "energy_full        = ${energy_full}"
-fi
-if [[ ${energy_full_design} != "unknown" ]]; then
-    echo "energy_full_design = ${energy_full_design}"
-    battery_health=$(( 100 * ${energy_full} / ${energy_full_design} ))
-    echo "battery health     = ${battery_health}%"
-fi
-
-if [[ "${wanted_cpus}" == "all" ]]; then
-    cpu_online=0
-    for c in /sys/devices/system/cpu/cpu?/online; do
-        echo "turning on cpu${cpu_online}"
-        echo "1" > "${c}"
-        cpu_online=$(( ${cpu_online} + 1 ))
-    done
-else
-    cpu_online=0
-    for c in /sys/devices/system/cpu/cpu?/online; do
-        echo "checking cpu at ${c}"
-        if [[ ${cpu_online} -lt ${wanted_cpus} || ${wanted_cpus} = "all" ]]; then
-            echo "turning on cpu${cpu_online}"
-            echo "1" > "${c}"
-        else
-            echo "turning off cpu${cpu_online}"
-            echo "0" > "${c}"
-        fi
-        cpu_online=$(( ${cpu_online} + 1 ))
-    done
-fi
-
-echo "checking scaling governors"
-for d in "${BASEDIR}"/policy?; do
-    if [[ -r "${d}"/scaling_governor ]]; then
-        read -r governor < "${d}"/scaling_governor
-    else
-        echo "can not read current scaling governor"
-        break
-    fi
-    if [[ -w "${d}"/scaling_governor ]]; then
-        if [[ "${governor}" != "${wanted_governor}" ]]; then
-            echo "updating ${governor} to ${wanted_governor}"
-            echo "${wanted_governor}" > "${d}"/scaling_governor
-        else
-            echo "governor already correctly set to ${governor}"
-        fi
-    else
-        echo "can not set scaling governor"
-        break
-    fi
-done
+print_battery_stats
+activate_cpus
+adjust_scaling_governor
