@@ -10,7 +10,7 @@ get_ac_status() {
 }
 
 print_scaling_governors() {
-    for d in "${BASEDIR}"/policy?; do
+    for d in /sys/devices/system/cpu/cpufreq/policy?; do
         cat "${d}/scaling_governor"
     done
 }
@@ -113,42 +113,60 @@ adjust_scaling_governor() {
     done
 }
 
-BASEDIR=/sys/devices/system/cpu/cpufreq
+parse_command_line() {
+    if [[ $# -ge 1 ]]; then
+        case "${1}" in
+            "-h"|"--help")
+                print_help
+                exit 0
+                ;;
+            "list")
+                print_scaling_governors
+                exit 0
+                ;;
+            *)
+                echo "unknown command line option"
+                exit 1
+                ;;
+        esac
+    fi
+}
 
-if [[ $# -ge 1 ]]; then
-    case "${1}" in
-        "-h"|"--help")
-            print_help
-            exit 0
-            ;;
-        "list")
-            print_scaling_governors
-            exit 0
-            ;;
-        *)
-            echo "unknown command line option"
-            exit 1
-            ;;
-    esac
-fi
+set_defaults() {
+    ac_online=$(get_ac_status)
+    if [[ ${ac_online} == "1" ]]; then
+        echo "AC power connected"
+        wanted_governor=conservative
+        wanted_cpus=$(get_number_cpus)
+    elif [[ ${ac_online} == "0" ]]; then
+        echo "AC power disconnected"
+        wanted_governor=powersave
+        wanted_cpus=${NUM_CPUS_ON_BATTERY}
+    else
+        echo "can not find power information"
+        exit 0
+    fi
+}
 
-ac_online=$(get_ac_status)
-max_cpus=$(get_number_cpus)
+parse_config() {
+    if [[ -r /etc/frequency-scaling.conf ]]; then
+        source /etc/frequency-scaling.conf
+    fi
 
-if [[ ${ac_online} == "1" ]]; then
-    echo "AC power connected"
-    wanted_governor=conservative
-    wanted_cpus=${max_cpus}
-elif [[ ${ac_online} == "0" ]]; then
-    echo "AC power disconnected"
-    wanted_governor=powersave
-    #wanted_cpus=1
-    wanted_cpus=${max_cpus}
-else
-    echo "can not find power information"
-    exit 0
-fi
+    : NUM_CPUS_ON_BATTERY=${NUM_CPUS_ON_BATTERY:=1}
 
+    if [[ ${NUM_CPUS_ON_BATTERY} -lt 1 ]]; then
+        NUM_CPUS_ON_BATTERY=1
+    fi
+
+    if [[ ${NUM_CPUS_ON_BATTERY} -gt $(get_number_cpus) ]]; then
+        NUM_CPUS_ON_BATTERY=$(get_number_cpus)
+    fi
+}
+
+parse_config
+parse_command_line
+set_defaults
 print_battery_stats
 activate_cpus
 adjust_scaling_governor
