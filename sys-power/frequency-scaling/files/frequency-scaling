@@ -133,15 +133,17 @@ if [[ $# -ge 1 ]]; then
 fi
 
 ac_online=$(get_ac_status)
+max_cpus=$(get_number_cpus)
 
 if [[ ${ac_online} == "1" ]]; then
     echo "AC power connected"
     wanted_governor=conservative
-    wanted_cpus=$(get_number_cpus)
+    wanted_cpus=${max_cpus}
 elif [[ ${ac_online} == "0" ]]; then
     echo "AC power disconnected"
     wanted_governor=powersave
-    wanted_cpus=1
+    #wanted_cpus=1
+    wanted_cpus=${max_cpus}
 else
     echo "can not find power information"
     exit 0
