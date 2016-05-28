@@ -65,15 +65,19 @@ get_number_cpus() {
 
 turn_on_cpu() {
     if [[ ${1} -gt 0 ]]; then
-        echo "turning on cpu${1}"
-        echo "1" > "/sys/devices/system/cpu/cpu${1}/online"
+        if [[ -w "/sys/devices/system/cpu/cpu${1}/online" ]]; then
+            echo "turning on cpu${1}"
+            echo "1" > "/sys/devices/system/cpu/cpu${1}/online"
+        fi
     fi
 }
 
 turn_off_cpu() {
     if [[ ${1} -gt 0 ]]; then
-        echo "turning on cpu${1}"
-        echo "0" > "/sys/devices/system/cpu/cpu${1}/online"
+        if [[ -w "/sys/devices/system/cpu/cpu${1}/online" ]]; then
+            echo "turning on cpu${1}"
+            echo "0" > "/sys/devices/system/cpu/cpu${1}/online"
+        fi
     fi
 }
 
