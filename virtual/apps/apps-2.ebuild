@@ -17,13 +17,17 @@ RDEPEND="
 	app-office/libreoffice-bin
 	app-text/aspell[linguas_en,linguas_de]
 	app-text/texlive[epspdf,extra,graphics,omega,pstricks,publishers,science]
+	dev-util/android-studio
 	dev-util/osc
 	dev-vcs/qgit
 	gnome-base/gnome
 	mail-client/thunderbird-bin
 	media-gfx/gimp
 	media-sound/mumble
+	net-analyzer/tcpdump
+	net-analyzer/wireshark
 	net-irc/weechat
 	>=sci-libs/gdal-2.0.2[python,curl,threads,jpeg2k]
+	www-client/firefox-bin
 	www-client/google-chrome
 	"
