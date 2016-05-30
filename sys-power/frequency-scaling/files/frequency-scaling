@@ -1,5 +1,11 @@
 #!/bin/bash
 
+verbose_output() {
+    if [[ ${verbose} -eq 1 ]]; then
+        echo "$@"
+    fi
+}
+
 get_ac_status() {
     for d in $(find /sys/devices -type d -name 'power_supply'); do
         if [[ -r "${d}"/AC/online ]]; then
@@ -31,13 +37,13 @@ print_battery_stats() {
         fi
     done
     if [[ ${energy_now} != "unknown" ]]; then
-        [[ ${verbose} -eq 1 ]] && echo "energy_now         = ${energy_now}"
+        verbose_output "energy_now         = ${energy_now}"
     fi
     if [[ ${energy_full} != "unknown" ]]; then
-        [[ ${verbose} -eq 1 ]] && echo "energy_full        = ${energy_full}"
+        verbose_output "energy_full        = ${energy_full}"
     fi
     if [[ ${energy_full_design} != "unknown" ]]; then
-        [[ ${verbose} -eq 1 ]] && echo "energy_full_design = ${energy_full_design}"
+        verbose_output "energy_full_design = ${energy_full_design}"
         battery_health=$(( 100 * ${energy_full} / ${energy_full_design} ))
         echo "battery health     = ${battery_health}%"
     fi
@@ -54,7 +60,7 @@ get_number_cpus() {
 turn_on_cpu() {
     if [[ ${1} -gt 0 ]]; then
         if [[ -w "/sys/devices/system/cpu/cpu${1}/online" ]]; then
-            [[ ${verbose} -eq 1 ]] && echo "turning on cpu${1}"
+            verbose_output "turning on cpu${1}"
             echo "1" > "/sys/devices/system/cpu/cpu${1}/online"
         fi
     fi
@@ -63,7 +69,7 @@ turn_on_cpu() {
 turn_off_cpu() {
     if [[ ${1} -gt 0 ]]; then
         if [[ -w "/sys/devices/system/cpu/cpu${1}/online" ]]; then
-            [[ ${verbose} -eq 1 ]] && echo "turning on cpu${1}"
+            verbose_output "turning on cpu${1}"
             echo "0" > "/sys/devices/system/cpu/cpu${1}/online"
         fi
     fi
@@ -104,7 +110,7 @@ adjust_scaling_governor() {
                 echo "updating ${governor} to ${wanted_governor} on cpu ${c}"
                 echo "${wanted_governor}" > "${d}"
             else
-                [[ ${verbose} -eq 1 ]] && echo "cpu ${c} already set to ${wanted_governor}"
+                verbose_output "cpu ${c} already set to ${wanted_governor}"
             fi
         else
             echo "can not set scaling governor"
@@ -152,11 +158,11 @@ parse_command_line() {
 set_defaults() {
     ac_online=$(get_ac_status)
     if [[ ${ac_online} == "1" ]]; then
-        [[ ${verbose} -eq 1 ]] && echo "AC power connected"
+        verbose_output "AC power connected"
         wanted_governor=conservative
         wanted_cpus=$(get_number_cpus)
     elif [[ ${ac_online} == "0" ]]; then
-        [[ ${verbose} -eq 1 ]] && echo "AC power disconnected"
+        verbose_output "AC power disconnected"
         wanted_governor=powersave
         wanted_cpus=${NUM_CPUS_ON_BATTERY}
     else
