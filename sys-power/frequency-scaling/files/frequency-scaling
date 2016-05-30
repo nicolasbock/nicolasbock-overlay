@@ -82,15 +82,23 @@ turn_off_cpu() {
 }
 
 is_cpu_online() {
-    cat /sys/devices/system/cpu/cpu${1}/online
+    if [[ -r /sys/devices/system/cpu/cpu${1}/online ]]; then
+        cat /sys/devices/system/cpu/cpu${1}/online
+    else
+        echo "0"
+    fi
 }
 
 activate_cpus() {
     for (( c = 0; c < ${wanted_cpus}; c++ )); do
-        turn_on_cpu ${c}
+        if [[ $(is_cpu_online ${c}) -eq 0 ]]; then
+            turn_on_cpu ${c}
+        fi
     done
     for (( c = ${wanted_cpus}; c < $(get_number_cpus); c++ )); do
-        turn_off_cpu ${c}
+        if [[ $(is_cpu_online ${c}) -eq 1 ]]; then
+            turn_off_cpu ${c}
+        fi
     done
 }
 
