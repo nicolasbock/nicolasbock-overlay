@@ -15,18 +15,6 @@ print_scaling_governors() {
     done
 }
 
-print_help() {
-    cat <<EOF
-Usage
-
-Options:
--h | --help     This help
-
-Commands:
-list            Show the currently active governors
-EOF
-}
-
 print_battery_stats() {
     local energy_full_design="unknown"
     local energy_full="unknown"
@@ -43,13 +31,13 @@ print_battery_stats() {
         fi
     done
     if [[ ${energy_now} != "unknown" ]]; then
-        echo "energy_now         = ${energy_now}"
+        [[ ${verbose} -eq 1 ]] && echo "energy_now         = ${energy_now}"
     fi
     if [[ ${energy_full} != "unknown" ]]; then
-        echo "energy_full        = ${energy_full}"
+        [[ ${verbose} -eq 1 ]] && echo "energy_full        = ${energy_full}"
     fi
     if [[ ${energy_full_design} != "unknown" ]]; then
-        echo "energy_full_design = ${energy_full_design}"
+        [[ ${verbose} -eq 1 ]] && echo "energy_full_design = ${energy_full_design}"
         battery_health=$(( 100 * ${energy_full} / ${energy_full_design} ))
         echo "battery health     = ${battery_health}%"
     fi
@@ -66,7 +54,7 @@ get_number_cpus() {
 turn_on_cpu() {
     if [[ ${1} -gt 0 ]]; then
         if [[ -w "/sys/devices/system/cpu/cpu${1}/online" ]]; then
-            echo "turning on cpu${1}"
+            [[ ${verbose} -eq 1 ]] && echo "turning on cpu${1}"
             echo "1" > "/sys/devices/system/cpu/cpu${1}/online"
         fi
     fi
@@ -75,7 +63,7 @@ turn_on_cpu() {
 turn_off_cpu() {
     if [[ ${1} -gt 0 ]]; then
         if [[ -w "/sys/devices/system/cpu/cpu${1}/online" ]]; then
-            echo "turning on cpu${1}"
+            [[ ${verbose} -eq 1 ]] && echo "turning on cpu${1}"
             echo "0" > "/sys/devices/system/cpu/cpu${1}/online"
         fi
     fi
@@ -115,6 +103,8 @@ adjust_scaling_governor() {
             if [[ "${governor}" != "${wanted_governor}" ]]; then
                 echo "updating ${governor} to ${wanted_governor} on cpu ${c}"
                 echo "${wanted_governor}" > "${d}"
+            else
+                [[ ${verbose} -eq 1 ]] && echo "cpu ${c} already set to ${wanted_governor}"
             fi
         else
             echo "can not set scaling governor"
@@ -123,12 +113,28 @@ adjust_scaling_governor() {
     done
 }
 
+print_help() {
+    cat <<EOF
+Usage
+
+Options:
+-h | --help     This help
+-v | --verbose  Print more information
+
+Commands:
+list            Show the currently active governors
+EOF
+}
+
 parse_command_line() {
-    if [[ $# -ge 1 ]]; then
+    while [[ $# -ge 1 ]]; do
         case "${1}" in
             "-h"|"--help")
                 print_help
                 exit 0
+                ;;
+            "-v"|"--verbose")
+                verbose=1
                 ;;
             "list")
                 print_scaling_governors
@@ -139,17 +145,18 @@ parse_command_line() {
                 exit 1
                 ;;
         esac
-    fi
+        shift
+    done
 }
 
 set_defaults() {
     ac_online=$(get_ac_status)
     if [[ ${ac_online} == "1" ]]; then
-        echo "AC power connected"
+        [[ ${verbose} -eq 1 ]] && echo "AC power connected"
         wanted_governor=conservative
         wanted_cpus=$(get_number_cpus)
     elif [[ ${ac_online} == "0" ]]; then
-        echo "AC power disconnected"
+        [[ ${verbose} -eq 1 ]] && echo "AC power disconnected"
         wanted_governor=powersave
         wanted_cpus=${NUM_CPUS_ON_BATTERY}
     else
@@ -175,7 +182,7 @@ parse_config() {
 }
 
 parse_config
-parse_command_line
+parse_command_line $@
 set_defaults
 print_battery_stats
 activate_cpus
