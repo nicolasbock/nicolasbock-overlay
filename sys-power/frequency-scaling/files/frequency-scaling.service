@@ -1,5 +1,5 @@
 [Unit]
-Description=Check periodically that the proper scaling governor is used
+Description=Frequency Scaling
 
 [Service]
 ExecStart=/usr/bin/frequency-scaling
