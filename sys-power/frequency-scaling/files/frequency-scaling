@@ -115,8 +115,6 @@ adjust_scaling_governor() {
             if [[ "${governor}" != "${wanted_governor}" ]]; then
                 echo "updating ${governor} to ${wanted_governor} on cpu ${c}"
                 echo "${wanted_governor}" > "${d}"
-            else
-                echo "governor already correctly set to ${governor} on cpu ${c}"
             fi
         else
             echo "can not set scaling governor"
