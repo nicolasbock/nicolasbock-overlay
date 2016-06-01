@@ -19,6 +19,7 @@ RDEPEND="
 	app-text/texlive[epspdf,extra,graphics,omega,pstricks,publishers,science]
 	dev-util/android-studio
 	dev-util/osc
+	dev-util/systemtap
 	dev-vcs/qgit
 	gnome-base/gnome
 	mail-client/thunderbird-bin
