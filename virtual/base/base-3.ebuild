@@ -33,6 +33,7 @@ RDEPEND="
 	app-vim/vim-spell-en
 	dev-lang/go
 	dev-lang/ruby
+	dev-lang/rust
 	dev-python/ipython[matplotlib,notebook]
 	dev-python/pandas
 	dev-python/pep8
