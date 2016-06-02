@@ -22,7 +22,7 @@ RDEPEND="
 	app-portage/eix
 	app-portage/flaggie
 	app-portage/gentoolkit
-	>=app-portage/layman-2.3.0
+	>=app-portage/layman-2.3.0[mercurial,subversion]
 	app-portage/mirrorselect
 	app-shells/bash-completion
 	>=app-vim/command-t-3.0
