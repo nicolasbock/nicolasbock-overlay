@@ -20,7 +20,6 @@ RDEPEND="
 	dev-util/android-studio
 	dev-util/osc
 	dev-util/systemtap
-	dev-vcs/mercurial
 	dev-vcs/qgit
 	gnome-base/gnome
 	mail-client/thunderbird-bin
