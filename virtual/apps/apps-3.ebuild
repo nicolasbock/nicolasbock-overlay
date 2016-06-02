@@ -29,6 +29,7 @@ RDEPEND="
 	net-analyzer/wireshark
 	net-irc/weechat
 	>=sci-libs/gdal-2.0.2[python,curl,threads,jpeg2k]
+	sys-apps/pkgcore
 	sys-devel/gdb[expat,lzma]
 	www-client/firefox-bin
 	www-client/google-chrome
