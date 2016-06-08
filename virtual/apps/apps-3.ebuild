@@ -13,6 +13,7 @@ IUSE=""
 RDEPEND="
 	app-crypt/keybase
 	app-editors/gvim[cscope,python,ruby]
+	app-emulation/virt-viewer
 	app-office/gnucash
 	app-office/libreoffice-bin
 	app-text/aspell[linguas_en,linguas_de]
@@ -28,6 +29,7 @@ RDEPEND="
 	net-analyzer/tcpdump
 	net-analyzer/wireshark
 	net-irc/weechat
+	net-p2p/rtorrent
 	>=sci-libs/gdal-2.0.2[python,curl,threads,jpeg2k]
 	sys-apps/pkgcore
 	sys-devel/gdb[expat,lzma]
