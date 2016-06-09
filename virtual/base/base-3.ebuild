@@ -48,6 +48,7 @@ RDEPEND="
 	media-fonts/wqy-microhei
 	media-fonts/wqy-zenhei
 	media-sound/pavucontrol
+	net-analyzer/iftop
 	net-firewall/ebtables
 	net-misc/networkmanager-openconnect
 	net-misc/networkmanager-openvpn
