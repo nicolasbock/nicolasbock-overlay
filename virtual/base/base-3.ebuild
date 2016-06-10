@@ -14,7 +14,6 @@ RDEPEND="
 	app-admin/sudo
 	app-editors/vim[cscope,python,ruby]
 	app-emulation/docker[btrfs]
-	app-emulation/virt-manager
 	app-misc/evtest
 	app-misc/tmate
 	app-misc/tmux

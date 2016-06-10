@@ -13,6 +13,9 @@ IUSE=""
 RDEPEND="
 	app-crypt/keybase
 	app-editors/gvim[cscope,python,ruby]
+	app-emulation/libvirt[lxc,qemu,xen]
+	app-emulation/qemu[spice,ssh,xen]
+	app-emulation/virt-manager
 	app-emulation/virt-viewer
 	app-office/gnucash
 	app-office/libreoffice-bin
