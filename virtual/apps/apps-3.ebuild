@@ -16,6 +16,7 @@ RDEPEND="
 	app-emulation/libvirt[qemu]
 	app-emulation/qemu[spice,ssh]
 	app-emulation/virt-manager
+	app-emulation/virtualbox-bin
 	app-emulation/virt-viewer
 	app-office/gnucash
 	app-office/libreoffice-bin
