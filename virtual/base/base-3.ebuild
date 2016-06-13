@@ -49,6 +49,7 @@ RDEPEND="
 	media-sound/pavucontrol
 	net-analyzer/iftop
 	net-firewall/ebtables
+	net-firewall/systemd-iptables
 	net-misc/networkmanager-openconnect
 	net-misc/networkmanager-openvpn
 	net-misc/networkmanager[resolvconf]
