@@ -6,9 +6,9 @@ Before=sysinit.target
 
 [Service]
 Type=oneshot
-ExecStart=/sbin/iptables-restore /etc/iptables/iptables.rules
-ExecReload=/sbin/iptables-restore /etc/iptables/iptables.rules
-ExecStop=/etc/iptables/flush-iptables.sh
+ExecStart=/sbin/iptables-restore /etc/firewall/iptables.rules
+ExecReload=/sbin/iptables-restore /etc/firewall/iptables.rules
+ExecStop=/etc/firewall/flush-iptables.sh
 RemainAfterExit=yes
 
 [Install]

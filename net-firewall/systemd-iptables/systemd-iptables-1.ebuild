@@ -15,9 +15,14 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
 
+RDEPENDS="
+	net-firewall/iptables
+	"
+
 pkg_preinst() {
 	systemd_dounit "${FILESDIR}/${PN}.service"
-	insinto "/etc/firewall"
+	exeinto "/etc/firewall"
 	doexe "${FILESDIR}/flush-iptables.sh"
+	insinto "/etc/firewall"
 	doins "${FILESDIR}/iptables.rules"
 }
