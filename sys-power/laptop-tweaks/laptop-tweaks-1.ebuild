@@ -22,4 +22,6 @@ pkg_preinst() {
 	exeinto /usr/sbin
 	doexe "${FILESDIR}/${PN}"
 	elog "Run ${PN} to tweak some power settings"
+	insinto /etc/modules-load.d
+	doins "${FILESDIR}/vbox.conf"
 }
