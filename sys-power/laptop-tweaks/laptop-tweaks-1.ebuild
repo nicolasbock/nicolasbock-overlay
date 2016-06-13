@@ -24,4 +24,6 @@ pkg_preinst() {
 	elog "Run ${PN} to tweak some power settings"
 	insinto /etc/modules-load.d
 	doins "${FILESDIR}/vbox.conf"
+	insinto /var/lib/iptables
+	doins "${FILESDIR}/rules-save"
 }
