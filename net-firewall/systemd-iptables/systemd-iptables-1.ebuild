@@ -17,7 +17,7 @@ IUSE=""
 
 pkg_preinst() {
 	systemd_dounit "${FILESDIR}/${PN}.service"
-	insinto /etc/firewall
+	insinto "/etc/firewall"
 	doexe "${FILESDIR}/flush-iptables.sh"
 	doins "${FILESDIR}/iptables.rules"
 }
