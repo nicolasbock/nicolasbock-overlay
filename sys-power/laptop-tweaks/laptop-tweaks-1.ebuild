@@ -21,16 +21,24 @@ RDEPEND="
 	sys-apps/ethtool
 "
 
-pkg_preinst() {
+#S="${WORKDIR}"
+
+src_unpack() {
+	mkdir -v -p "${S}" || die
+}
+
+src_install() {
 	exeinto /usr/sbin
 	doexe "${FILESDIR}/${PN}"
-	elog "Run ${PN} to tweak some power settings"
 	insinto /etc/modules-load.d
 	doins "${FILESDIR}/vbox.conf"
 	insinto /var/lib/iptables
 	doins "${FILESDIR}/rules-save"
-	cat >> /etc/resolvconf.conf <<EOF
-# Use Google DNS as a fallback.
-name_servers_append="8.8.8.8 8.8.4.4"
-EOF
+	insinto /etc
+	newins "${FILESDIR}/resolvconf.conf-google-dns" resolvconf.conf
+}
+
+pkg_postinst() {
+	elog "Run ${PN} to tweak some power settings"
+	elog "Run resolvconf -u to update /etc/resolv.conf"
 }
