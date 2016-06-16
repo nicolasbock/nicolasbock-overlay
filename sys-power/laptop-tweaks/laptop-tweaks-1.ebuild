@@ -15,6 +15,7 @@ IUSE=""
 
 DEPEND="
 	net-dns/openresolv
+	net-firewall/iptables
 "
 RDEPEND="
 	${RDEPEND}
@@ -36,6 +37,7 @@ src_install() {
 	doins "${FILESDIR}/rules-save"
 	insinto /etc
 	newins "${FILESDIR}/resolvconf.conf-google-dns" resolvconf.conf
+	doenvd "${FILESDIR}/99${PN}"
 }
 
 pkg_postinst() {
