@@ -30,6 +30,7 @@ pkg_preinst() {
 	insinto /var/lib/iptables
 	doins "${FILESDIR}/rules-save"
 	cat >> /etc/resolvconf.conf <<EOF
+# Use Google DNS as a fallback.
 name_servers_append="8.8.8.8 8.8.4.4"
 EOF
 }
