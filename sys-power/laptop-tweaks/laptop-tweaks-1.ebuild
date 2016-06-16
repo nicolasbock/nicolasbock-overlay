@@ -13,8 +13,11 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
 
-DEPEND=""
+DEPEND="
+	net-dns/openresolv
+"
 RDEPEND="
+	${RDEPEND}
 	sys-apps/ethtool
 "
 
@@ -26,4 +29,7 @@ pkg_preinst() {
 	doins "${FILESDIR}/vbox.conf"
 	insinto /var/lib/iptables
 	doins "${FILESDIR}/rules-save"
+	cat >> /etc/resolvconf.conf <<EOF
+name_servers_append="8.8.8.8 8.8.4.4"
+EOF
 }
