@@ -27,7 +27,8 @@ for c in /sys/bus/pci/devices/*/power/control; do
     print_and_set "$c" "auto"
 done
 print_and_set /sys/module/snd_hda_intel/parameters/power_save "1"
-if [[ -x /sbin/ethtool ]]; then
-    /sbin/ethtool -s enp0s25 wol d
+if [[ -x /usr/sbin/ethtool ]]; then
+    echo "disabling wake-on-LAN for network interfaces"
+    /usr/sbin/ethtool -s enp0s25 wol d
 fi
 print_and_set /proc/sys/vm/dirty_writeback_centisecs "1500"
