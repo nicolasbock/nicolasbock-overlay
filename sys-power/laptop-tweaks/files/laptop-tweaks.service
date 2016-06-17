@@ -1,0 +1,8 @@
+[Unit]
+Description= Tweak some power related laptop settings
+
+[Service]
+ExecStart=/usr/sbin/laptop-tweaks
+
+[Install]
+WantedBy=multi-user.target

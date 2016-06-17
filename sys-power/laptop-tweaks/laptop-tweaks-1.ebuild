@@ -4,6 +4,8 @@
 
 EAPI=5
 
+inherit systemd
+
 DESCRIPTION="Some laptop tweaks (for power)"
 HOMEPAGE="https://github.com/nicolasbock/nicolasbock-overlay"
 SRC_URI=""
@@ -38,6 +40,7 @@ src_install() {
 	insinto /etc
 	newins "${FILESDIR}/resolvconf.conf-google-dns" resolvconf.conf
 	doenvd "${FILESDIR}/99${PN}"
+	systemd_dounit "${FILESDIR}/${PN}.service"
 }
 
 pkg_postinst() {
