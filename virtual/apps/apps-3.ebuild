@@ -25,6 +25,7 @@ RDEPEND="
 	dev-util/android-studio
 	dev-util/osc
 	dev-util/systemtap
+	dev-util/valgrind
 	dev-vcs/qgit
 	gnome-base/gnome
 	mail-client/thunderbird-bin
