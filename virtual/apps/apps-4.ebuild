@@ -33,6 +33,7 @@ RDEPEND="
 	media-sound/mumble
 	net-analyzer/tcpdump
 	net-analyzer/wireshark
+	net-irc/hexchat
 	net-irc/weechat
 	net-p2p/rtorrent
 	>=sci-libs/gdal-2.0.2[python,curl,threads,jpeg2k]
