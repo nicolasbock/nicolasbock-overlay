@@ -35,6 +35,7 @@ RDEPEND="
 	net-analyzer/wireshark
 	net-irc/hexchat
 	net-irc/weechat
+	net-irc/znc
 	net-p2p/rtorrent
 	>=sci-libs/gdal-2.0.2[python,curl,threads,jpeg2k]
 	sys-apps/pkgcore
