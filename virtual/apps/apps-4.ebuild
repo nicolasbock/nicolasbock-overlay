@@ -22,6 +22,7 @@ RDEPEND="
 	app-office/libreoffice-bin
 	app-text/aspell[l10n_de,l10n_en]
 	app-text/texlive[epspdf,extra,graphics,omega,pstricks,publishers,science]
+	dev-python/git-review
 	dev-util/android-studio
 	dev-util/osc
 	dev-util/systemtap
