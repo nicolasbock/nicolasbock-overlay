@@ -20,7 +20,7 @@ RDEPEND="
 	app-emulation/virt-viewer
 	app-office/gnucash
 	app-office/libreoffice-bin
-	app-text/aspell[linguas_en,linguas_de]
+	app-text/aspell[l10n_de,l10n_en]
 	app-text/texlive[epspdf,extra,graphics,omega,pstricks,publishers,science]
 	dev-util/android-studio
 	dev-util/osc
