@@ -28,6 +28,7 @@ RDEPEND="
 	app-vim/eruby-syntax
 	app-vim/fugitive
 	app-vim/gnupg
+	app-vim/python-mode
 	app-vim/rails
 	app-vim/vim-spell-en
 	dev-lang/go
