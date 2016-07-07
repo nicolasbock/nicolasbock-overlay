@@ -8,12 +8,10 @@ inherit systemd
 
 DESCRIPTION="Some laptop tweaks (for power)"
 HOMEPAGE="https://github.com/nicolasbock/nicolasbock-overlay"
-SRC_URI=""
 
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE=""
 
 DEPEND="
 	net-dns/openresolv
@@ -39,6 +37,8 @@ src_install() {
 	doins "${FILESDIR}/rules-save"
 	insinto /etc
 	newins "${FILESDIR}/resolvconf.conf-google-dns" resolvconf.conf
+	insinto /etc/tmpfiles.d
+	doins "${FILESDIR}/tmp-part.conf"
 	doenvd "${FILESDIR}/99${PN}"
 	systemd_dounit "${FILESDIR}/${PN}.service"
 }
