@@ -41,6 +41,8 @@ src_install() {
 	doins "${FILESDIR}/tmp-part.conf"
 	doenvd "${FILESDIR}/99${PN}"
 	systemd_dounit "${FILESDIR}/${PN}.service"
+	insinto /etc/systemd/network
+	doins "${FILESDIR}"/wired.network
 }
 
 pkg_postinst() {
