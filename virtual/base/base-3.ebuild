@@ -31,6 +31,7 @@ RDEPEND="
 	app-vim/python-mode
 	app-vim/rails
 	app-vim/vim-spell-en
+	app-vim/voom
 	dev-lang/go
 	dev-lang/ruby
 	dev-lang/rust
