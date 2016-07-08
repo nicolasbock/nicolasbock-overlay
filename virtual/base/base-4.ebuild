@@ -51,6 +51,7 @@ RDEPEND="
 	media-sound/pavucontrol
 	net-analyzer/iftop
 	net-firewall/ebtables
+	net-misc/iputils[arping,clockdiff,idn,rdisc,tftpd,tracepath,traceroute]
 	net-misc/networkmanager-openconnect
 	net-misc/networkmanager-openvpn
 	net-misc/networkmanager[resolvconf]
