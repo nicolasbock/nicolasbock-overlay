@@ -39,6 +39,7 @@ RDEPEND="
 	net-irc/znc
 	net-p2p/rtorrent
 	>=sci-libs/gdal-2.0.2[python,curl,threads,jpeg2k]
+	sys-apps/hdparm
 	sys-apps/pkgcore
 	sys-devel/gdb[expat,lzma]
 	www-client/firefox-bin
