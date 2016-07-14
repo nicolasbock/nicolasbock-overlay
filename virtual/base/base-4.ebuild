@@ -17,7 +17,6 @@ RDEPEND="
 	app-misc/evtest
 	app-misc/tmate
 	app-misc/tmux
-	app-portage/cpuinfo2cpuflags
 	app-portage/eix
 	app-portage/flaggie
 	app-portage/gentoolkit
