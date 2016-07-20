@@ -43,6 +43,8 @@ src_install() {
 	systemd_dounit "${FILESDIR}/${PN}.service"
 	insinto /etc/systemd/network
 	doins "${FILESDIR}"/wired.network
+	insinto /etc/NetworkManager
+	doins "${FILESDIR}"/NetworkManager.conf
 }
 
 pkg_postinst() {
