@@ -16,6 +16,7 @@ KEYWORDS="~amd64"
 DEPEND="
 	net-dns/openresolv
 	net-firewall/iptables
+	>=net-misc/networkmanager-1.2.0
 "
 RDEPEND="
 	${RDEPEND}
@@ -45,6 +46,8 @@ src_install() {
 	doins "${FILESDIR}"/wired.network
 	insinto /etc/NetworkManager
 	doins "${FILESDIR}"/NetworkManager.conf
+	insinto /etc/NetworkManager/dnsmasq.d
+	doins "${FILESDIR}"/static-dns
 }
 
 pkg_postinst() {
