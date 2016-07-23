@@ -34,6 +34,7 @@ RDEPEND="
 	media-sound/mumble
 	net-analyzer/tcpdump
 	net-analyzer/wireshark
+	net-dns/dnsmasq[dhcp,tftp]
 	net-irc/hexchat
 	net-irc/weechat
 	net-irc/znc
