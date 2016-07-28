@@ -56,6 +56,7 @@ RDEPEND="
 	net-misc/networkmanager[resolvconf]
 	net-wireless/rfkill
 	sci-libs/scipy[sparse]
+	sys-apps/microcode-ctl
 	sys-apps/pciutils
 	sys-apps/usbutils
 	sys-boot/grub[device-mapper]
