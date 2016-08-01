@@ -37,15 +37,15 @@ print_battery_stats() {
         fi
     done
     if [[ ${energy_now} != "unknown" ]]; then
-        verbose_output "energy_now         = ${energy_now}"
+        verbose_output "energy_now = ${energy_now}"
     fi
     if [[ ${energy_full} != "unknown" ]]; then
-        verbose_output "energy_full        = ${energy_full}"
+        verbose_output "energy_full = ${energy_full}"
     fi
     if [[ ${energy_full_design} != "unknown" ]]; then
         verbose_output "energy_full_design = ${energy_full_design}"
         battery_health=$(( 100 * ${energy_full} / ${energy_full_design} ))
-        echo "battery health     = ${battery_health}%"
+        echo "battery health = ${battery_health}%"
     fi
 }
 
