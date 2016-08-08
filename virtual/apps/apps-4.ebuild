@@ -13,7 +13,7 @@ IUSE=""
 RDEPEND="
 	app-crypt/keybase
 	app-editors/gvim[cscope,python,ruby]
-	app-emulation/libvirt[lxc,qemu,virtualbox]
+	app-emulation/libvirt[lxc,qemu,sasl,virtualbox]
 	app-emulation/qemu[spice,ssh]
 	app-emulation/virt-manager
 	app-emulation/virtualbox-bin
