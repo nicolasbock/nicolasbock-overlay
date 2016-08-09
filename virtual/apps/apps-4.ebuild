@@ -30,7 +30,7 @@ RDEPEND="
 	dev-util/valgrind
 	dev-vcs/qgit
 	gnome-base/gnome
-	mail-client/claws-mail
+	mail-client/claws-mail[archive]
 	mail-client/thunderbird-bin
 	media-gfx/gimp
 	media-sound/mumble
