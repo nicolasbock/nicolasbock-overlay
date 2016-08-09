@@ -15,6 +15,7 @@ RDEPEND="
 	app-editors/gvim[cscope,python,ruby]
 	app-emulation/libvirt[lxc,qemu,sasl,virtualbox]
 	app-emulation/qemu[spice,ssh]
+	app-emulation/vagrant
 	app-emulation/virt-manager
 	app-emulation/virtualbox-bin
 	app-emulation/virt-viewer
