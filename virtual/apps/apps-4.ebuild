@@ -48,5 +48,7 @@ RDEPEND="
 	sys-devel/gdb[expat,lzma]
 	www-client/firefox-bin
 	www-client/google-chrome
+	x11-misc/i3lock
+	x11-misc/i3status
 	x11-wm/i3
 	"
