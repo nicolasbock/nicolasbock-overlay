@@ -47,4 +47,5 @@ RDEPEND="
 	sys-devel/gdb[expat,lzma]
 	www-client/firefox-bin
 	www-client/google-chrome
+	x11-wm/i3
 	"
