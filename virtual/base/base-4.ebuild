@@ -23,7 +23,6 @@ RDEPEND="
 	>=app-portage/layman-2.3.0[mercurial,subversion]
 	app-portage/mirrorselect
 	app-shells/bash-completion
-	app-vim/airline
 	>=app-vim/command-t-3.0
 	app-vim/extra-syntax
 	app-vim/fugitive
