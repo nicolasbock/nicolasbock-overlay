@@ -48,8 +48,10 @@ src_install() {
 	doins "${FILESDIR}"/NetworkManager.conf
 	insinto /etc/NetworkManager/dnsmasq.d
 	doins "${FILESDIR}"/static-dns
-	insinto /etc/X11/xorg.conf.d
-	doins "${FILESDIR}/50-touchpad.conf"
+	#exeinto /usr/bin
+	#doexe "${FILESDIR}/i3-keyboards"
+	#insinto /etc/X11/xorg.conf.d
+	#doins "${FILESDIR}/50-touchpad.conf"
 }
 
 pkg_postinst() {
