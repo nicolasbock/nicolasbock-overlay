@@ -40,7 +40,7 @@ RDEPEND="
 	net-irc/hexchat
 	net-irc/weechat
 	net-irc/znc
-	net-fs/nfs-utils
+	net-fs/nfs-utils[nfsv4,nfsv41]
 	net-p2p/rtorrent
 	>=sci-libs/gdal-2.0.2[python,curl,threads,jpeg2k]
 	sys-apps/hdparm
@@ -48,6 +48,7 @@ RDEPEND="
 	sys-devel/gdb[expat,lzma]
 	www-client/firefox-bin
 	www-client/google-chrome
+	x11-misc/dmenu
 	x11-misc/i3lock
 	x11-misc/i3status
 	x11-wm/i3
