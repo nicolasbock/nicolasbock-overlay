@@ -51,5 +51,6 @@ RDEPEND="
 	x11-misc/dmenu
 	x11-misc/i3lock
 	x11-misc/i3status
+	x11-misc/xautolock
 	x11-wm/i3
 	"
