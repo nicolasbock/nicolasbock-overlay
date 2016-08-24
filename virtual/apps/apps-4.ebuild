@@ -24,11 +24,13 @@ RDEPEND="
 	app-text/aspell[l10n_de,l10n_en]
 	app-text/texlive[epspdf,extra,graphics,omega,pstricks,publishers,science]
 	dev-python/git-review
+	dev-ruby/rails
 	dev-util/android-studio
 	dev-util/osc
 	dev-util/shellcheck
 	dev-util/systemtap
 	dev-util/valgrind
+	dev-vcs/git-deps
 	dev-vcs/qgit
 	gnome-base/gnome
 	mail-client/claws-mail[archive]
@@ -38,15 +40,16 @@ RDEPEND="
 	net-analyzer/tcpdump
 	net-analyzer/wireshark
 	net-dns/dnsmasq[dhcp,tftp]
+	net-fs/nfs-utils[nfsv4,nfsv41]
 	net-irc/hexchat
 	net-irc/weechat
 	net-irc/znc
-	net-fs/nfs-utils[nfsv4,nfsv41]
 	net-p2p/rtorrent
 	>=sci-libs/gdal-2.0.2[python,curl,threads,jpeg2k]
 	sys-apps/hdparm
 	sys-apps/pkgcore
 	sys-devel/gdb[expat,lzma]
+	sys-kernel/kernel-configs
 	www-client/firefox-bin
 	www-client/google-chrome
 	x11-misc/dmenu
