@@ -26,6 +26,7 @@ RDEPEND="
 	dev-python/git-review
 	dev-util/android-studio
 	dev-util/osc
+	dev-util/shellcheck
 	dev-util/systemtap
 	dev-util/valgrind
 	dev-vcs/qgit
