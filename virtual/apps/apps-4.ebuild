@@ -12,6 +12,7 @@ IUSE=""
 
 RDEPEND="
 	app-crypt/keybase
+	app-editors/gedit-plugins[git,terminal]
 	app-editors/gvim[cscope,python,ruby]
 	app-emulation/libvirt[lxc,qemu,sasl,virtualbox]
 	app-emulation/qemu[spice,ssh]
