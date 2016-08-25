@@ -37,6 +37,7 @@ RDEPEND="
 	mail-client/thunderbird-bin
 	media-gfx/gimp
 	media-sound/mumble
+	net-analyzer/nmap[nping]
 	net-analyzer/tcpdump
 	net-analyzer/wireshark
 	net-dns/dnsmasq[dhcp,tftp]
