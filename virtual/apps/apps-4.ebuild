@@ -54,6 +54,7 @@ RDEPEND="
 	sys-kernel/kernel-configs
 	www-client/firefox-bin
 	www-client/google-chrome
+	www-servers/nginx
 	x11-misc/dmenu
 	x11-misc/i3lock
 	x11-misc/i3status
