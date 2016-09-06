@@ -43,9 +43,11 @@ RDEPEND="
 	net-analyzer/wireshark
 	net-dns/dnsmasq[dhcp,tftp]
 	net-fs/nfs-utils[nfsv4,nfsv41]
+	net-ftp/atftp
 	net-irc/hexchat
 	net-irc/weechat
 	net-irc/znc
+	net-misc/netkit-telnet
 	net-p2p/rtorrent
 	>=sci-libs/gdal-2.0.2[python,curl,threads,jpeg2k]
 	sys-apps/hdparm
