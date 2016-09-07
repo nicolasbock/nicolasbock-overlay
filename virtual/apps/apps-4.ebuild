@@ -47,7 +47,7 @@ RDEPEND="
 	net-irc/hexchat
 	net-irc/weechat
 	net-irc/znc
-	net-misc/netkit-telnet
+	net-misc/netkit-telnetd
 	net-p2p/rtorrent
 	>=sci-libs/gdal-2.0.2[python,curl,threads,jpeg2k]
 	sys-apps/hdparm
