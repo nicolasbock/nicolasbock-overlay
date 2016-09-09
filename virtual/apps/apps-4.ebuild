@@ -24,6 +24,7 @@ RDEPEND="
 	app-office/libreoffice-bin
 	app-text/aspell[l10n_de,l10n_en]
 	app-text/texlive[epspdf,extra,graphics,omega,pstricks,publishers,science]
+	dev-db/mariadb
 	dev-python/git-review
 	dev-ruby/rails
 	dev-util/android-studio
