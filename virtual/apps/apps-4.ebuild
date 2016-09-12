@@ -35,6 +35,7 @@ RDEPEND="
 	dev-vcs/git-deps
 	dev-vcs/qgit
 	gnome-base/gnome
+	gnome-extra/gnome-clocks
 	mail-client/claws-mail[archive]
 	mail-client/thunderbird-bin
 	media-gfx/gimp
