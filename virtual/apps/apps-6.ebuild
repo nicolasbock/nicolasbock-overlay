@@ -38,6 +38,7 @@ RDEPEND="
 	gnome-base/gnome
 	gnome-extra/gnome-clocks
 	mail-client/claws-mail[archive]
+	mail-client/mutt
 	mail-client/thunderbird-bin
 	media-gfx/gimp
 	media-sound/mumble
@@ -50,7 +51,7 @@ RDEPEND="
 	net-irc/hexchat
 	net-irc/weechat
 	net-irc/znc
-	net-mail/fetchmail
+	net-mail/offlineimap
 	net-misc/netkit-telnetd
 	net-p2p/rtorrent
 	>=sci-libs/gdal-2.0.2[python,curl,threads,jpeg2k]
