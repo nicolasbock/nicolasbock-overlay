@@ -48,7 +48,7 @@ RDEPEND="
 	net-dns/dnsmasq[dhcp,tftp]
 	net-fs/nfs-utils[nfsv4,nfsv41]
 	net-ftp/atftp
-	net-ftp/ftp
+	net-ftp/ncftp
 	net-irc/hexchat
 	net-irc/weechat
 	net-irc/znc
