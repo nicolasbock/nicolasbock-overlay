@@ -4,7 +4,7 @@
 	<longdescription lang="en">
 		Metapackage for some base packages.
 	</longdescription>
-	<maintainer>
+	<maintainer type="person">
 		<email>nicolasbock@gmail.com</email>
 	</maintainer>
 </pkgmetadata>
