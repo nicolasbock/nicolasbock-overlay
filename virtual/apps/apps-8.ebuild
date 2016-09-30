@@ -27,7 +27,7 @@ RDEPEND="
 	app-text/texlive[epspdf,extra,graphics,omega,pstricks,publishers,science]
 	dev-db/mariadb
 	dev-python/git-review
-	dev-python/tox
+	>=dev-python/tox-2.0
 	dev-ruby/rails
 	dev-util/android-studio
 	dev-util/osc
