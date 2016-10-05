@@ -41,7 +41,7 @@ RDEPEND="
 	gnome-base/gnome
 	gnome-extra/gnome-clocks
 	mail-client/claws-mail[archive]
-	mail-client/mutt
+	mail-client/mutt[gpg,imap,mbox,sasl,sidebar,smime,smtp,notmuch]
 	mail-client/thunderbird-bin
 	media-gfx/gimp
 	media-sound/mumble
