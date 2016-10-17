@@ -4,7 +4,7 @@
 	<longdescription lang="en">
 		Kernel configs.
 	</longdescription>
-	<maintainer>
+	<maintainer type="person">
 		<email>nicolasbock@gmail.com</email>
 	</maintainer>
 </pkgmetadata>
