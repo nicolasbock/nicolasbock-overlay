@@ -12,22 +12,12 @@ IUSE=""
 
 RDEPEND="
 	app-admin/sudo
-	app-editors/vim[cscope,python,ruby]
 	app-portage/eix
 	app-portage/flaggie
 	app-portage/gentoolkit
 	>=app-portage/layman-2.3.0[mercurial,subversion]
 	app-portage/mirrorselect
 	app-shells/bash-completion
-	>=app-vim/command-t-3.0
-	app-vim/extra-syntax
-	app-vim/fugitive
-	app-vim/gnupg
-	app-vim/python-mode
-	app-vim/rails
-	app-vim/vim-spell-de
-	app-vim/vim-spell-en
-	app-vim/voom
 	net-analyzer/iftop
 	net-firewall/ebtables
 	net-misc/iputils[arping,clockdiff,idn,rdisc,tftpd,tracepath,traceroute]

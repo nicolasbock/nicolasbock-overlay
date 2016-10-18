@@ -12,6 +12,16 @@ IUSE=""
 
 RDEPEND="
 	app-crypt/kbfs
+	app-editors/vim[cscope,python,ruby]
+	>=app-vim/command-t-3.0
+	app-vim/extra-syntax
+	app-vim/fugitive
+	app-vim/gnupg
+	app-vim/python-mode
+	app-vim/rails
+	app-vim/vim-spell-de
+	app-vim/vim-spell-en
+	app-vim/voom
 	app-crypt/keybase
 	app-doc/doxygen
 	app-editors/gedit-plugins[git,terminal]
