@@ -70,8 +70,6 @@ RDEPEND="
 	sys-fs/dosfstools
 	sys-kernel/genkernel-next[cryptsetup]
 	sys-kernel/vanilla-sources
-	sys-power/frequency-scaling
-	sys-power/laptop-tweaks
 	sys-power/powertop
 	sys-process/htop
 	sys-process/lsof
