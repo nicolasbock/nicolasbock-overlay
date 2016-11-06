@@ -16,7 +16,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="berkdb crypt debug doc gdbm gnutls gpg idn imap kerberos libressl mbox nls nntp notmuch pop qdbm sasl selinux sidebar slang smime smtp ssl tokyocabinet vanilla"
 
 CDEPEND="
-	mail-client/mutt
+	!mail-client/mutt
 	app-misc/mime-types
 	nls? ( virtual/libintl )
 	tokyocabinet?  ( dev-db/tokyocabinet )
