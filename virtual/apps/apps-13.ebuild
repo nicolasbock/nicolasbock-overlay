@@ -18,6 +18,7 @@ RDEPEND="
 	app-vim/fugitive
 	app-vim/gnupg
 	app-vim/python-mode
+	app-vim/rails
 	app-vim/vim-spell-de
 	app-vim/vim-spell-en
 	app-vim/voom
@@ -52,6 +53,7 @@ RDEPEND="
 	dev-python/pep8
 	dev-python/sphinx
 	>=dev-python/tox-2.0
+	dev-ruby/rails
 	dev-util/android-studio
 	dev-util/indent
 	dev-util/osc
