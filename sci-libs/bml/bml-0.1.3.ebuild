@@ -15,7 +15,10 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND=""
+DEPEND="
+	virtual/blas
+	virtual/lapack
+"
 RDEPEND="${DEPEND}"
 
 src_configure() {
