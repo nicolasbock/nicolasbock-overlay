@@ -14,14 +14,25 @@ EGIT_BRANCH="develop"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS=""
-IUSE=""
+IUSE="test"
 
-DEPEND=""
+DEPEND="
+	virtual/blas
+	virtual/lapack
+"
 RDEPEND="${DEPEND}"
 
 src_configure() {
 	local my_cflags="-std=c99"
+	local mycmakeargs=(
+		BUILD_SHARED_LIBS=yes
+		BML_TESTING=yes
+	)
 	CFLAGS="${CFLAGS} ${my_cflags}" \
 		CXXFLAGS="${CXXFLAGS} ${my_cflags}" \
 		cmake-utils_src_configure
+}
+
+src_test() {
+	cmake-utils_src_test
 }

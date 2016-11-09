@@ -13,7 +13,7 @@ SRC_URI="https://github.com/qmmd/bml/archive/v${PV}.tar.gz"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="test"
 
 DEPEND="
 	virtual/blas
@@ -23,7 +23,15 @@ RDEPEND="${DEPEND}"
 
 src_configure() {
 	local my_cflags="-std=c99"
+	local mycmakeargs=(
+		BUILD_SHARED_LIBS=yes
+		BML_TESTING=yes
+	)
 	CFLAGS="${CFLAGS} ${my_cflags}" \
 		CXXFLAGS="${CXXFLAGS} ${my_cflags}" \
 		cmake-utils_src_configure
+}
+
+src_test() {
+	cmake-utils_src_test
 }
