@@ -11,6 +11,6 @@
 
 -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
 
--A INPUT -m state --state NEW -j LOG --log-prefix "blocked "
+-A INPUT -m state --state NEW -j LOG --log-prefix "blocked: "
 
 COMMIT
