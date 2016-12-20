@@ -90,7 +90,6 @@ RDEPEND="
 	net-mail/offlineimap
 	net-misc/netkit-telnetd
 	net-p2p/rtorrent
-	>=sci-libs/gdal-2.0.2[python,curl,threads,jpeg2k]
 	sci-libs/scipy[sparse]
 	sys-apps/hdparm
 	sys-apps/pkgcore
