@@ -74,6 +74,7 @@ RDEPEND="
 	media-fonts/wqy-microhei
 	media-fonts/wqy-zenhei
 	media-gfx/gimp
+	media-plugins/gst-plugins-meta[dv,dvb,libass,opus,theora,taglib,vaapi,vcd,vpx,wavpack]
 	media-sound/mumble
 	media-sound/pavucontrol
 	net-analyzer/nmap[nping]
