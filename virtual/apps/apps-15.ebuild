@@ -1,4 +1,4 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -19,9 +19,9 @@ RDEPEND="
 	app-editors/gvim[cscope,python,ruby]
 	app-editors/vim[cscope,python,ruby]
 	app-emulation/docker[btrfs]
-	app-emulation/libvirt[lxc,qemu,sasl]
+	app-emulation/libvirt[lxc,qemu,sasl,-virtualbox]
 	app-emulation/qemu[spice,ssh]
-	app-emulation/vagrant
+	app-emulation/vagrant[-virtualbox]
 	app-emulation/virt-manager
 	app-emulation/virt-viewer
 	app-misc/evtest
