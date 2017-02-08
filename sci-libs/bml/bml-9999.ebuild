@@ -1,4 +1,4 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -25,8 +25,8 @@ RDEPEND="${DEPEND}"
 src_configure() {
 	local my_cflags="-std=c99"
 	local mycmakeargs=(
-		BUILD_SHARED_LIBS=yes
-		BML_TESTING=yes
+		-DBUILD_SHARED_LIBS=yes
+		-DBML_TESTING=$(usex test)
 	)
 	CFLAGS="${CFLAGS} ${my_cflags}" \
 		CXXFLAGS="${CXXFLAGS} ${my_cflags}" \
