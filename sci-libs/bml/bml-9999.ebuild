@@ -9,7 +9,7 @@ inherit cmake-utils git-r3
 DESCRIPTION="The basic matrix library"
 HOMEPAGE="http://qmmd.github.io/bml/"
 EGIT_REPO_URI="https://github.com/qmmd/bml.git"
-EGIT_BRANCH="develop"
+EGIT_BRANCH="master"
 
 LICENSE="BSD"
 SLOT="0"
