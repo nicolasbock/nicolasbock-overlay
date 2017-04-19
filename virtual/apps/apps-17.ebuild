@@ -96,7 +96,7 @@ RDEPEND="
 	sys-apps/pkgcore
 	sys-boot/syslinux
 	sys-boot/unetbootin
-	sys-devel/gdb[expat,lzma]
+	sys-devel/gdb[lzma]
 	sys-kernel/kernel-configs
 	sys-power/powertop
 	sys-process/htop
