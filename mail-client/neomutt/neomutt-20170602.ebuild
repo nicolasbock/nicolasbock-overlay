@@ -13,9 +13,8 @@ SRC_URI="https://github.com/${PN}/${PN}/archive/${P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="berkdb crypt debug doc gdbm gnutls gpg idn imap kerberos libressl mbox
-	nls nntp notmuch pop qdbm sasl selinux sidebar slang smime smtp ssl
-	tokyocabinet vanilla"
+IUSE="berkdb crypt debug doc gdbm gnutls gpg idn kerberos libressl mbox nls
+	notmuch qdbm sasl selinux slang smime ssl tokyocabinet vanilla"
 
 CDEPEND="
 	!mail-client/mutt
@@ -29,37 +28,15 @@ CDEPEND="
 			!gdbm? ( berkdb? ( >=sys-libs/db-4:= ) )
 		)
 	)
-	imap?    (
-		gnutls?  ( >=net-libs/gnutls-1.0.17 )
-		!gnutls? (
-			ssl? (
-				!libressl? ( >=dev-libs/openssl-0.9.6:0 )
-				libressl? ( dev-libs/libressl )
-			)
+	gnutls?  ( >=net-libs/gnutls-1.0.17 )
+	!gnutls? (
+		ssl? (
+			!libressl? ( >=dev-libs/openssl-0.9.6:0 )
+			libressl? ( dev-libs/libressl )
 		)
-		sasl?    ( >=dev-libs/cyrus-sasl-2 )
 	)
+	sasl?    ( >=dev-libs/cyrus-sasl-2 )
 	kerberos? ( virtual/krb5 )
-	pop?     (
-		gnutls?  ( >=net-libs/gnutls-1.0.17 )
-		!gnutls? (
-			ssl? (
-				!libressl? ( >=dev-libs/openssl-0.9.6:0 )
-				libressl? ( dev-libs/libressl )
-			)
-		)
-		sasl?    ( >=dev-libs/cyrus-sasl-2 )
-	)
-	smtp?     (
-		gnutls?  ( >=net-libs/gnutls-1.0.17 )
-		!gnutls? (
-			ssl? (
-				!libressl? ( >=dev-libs/openssl-0.9.6:0 )
-				libressl? ( dev-libs/libressl )
-			)
-		)
-		sasl?    ( >=dev-libs/cyrus-sasl-2 )
-	)
 	idn?     ( net-dns/libidn )
 	gpg?     ( >=app-crypt/gpgme-0.9.0 )
 	smime?   (
@@ -95,19 +72,12 @@ src_configure() {
 		"$(use_enable debug)"
 		"$(use_enable doc)"
 		"$(use_enable gpg gpgme)"
-		"$(use_enable imap)"
 		"$(use_enable nls)"
-		"$(use_enable nntp)"
-		"$(use_enable pop)"
-		"$(use_enable sidebar)"
 		"$(use_enable smime)"
-		"$(use_enable smtp)"
 		"$(use_enable notmuch)"
 		"$(use_with idn)"
 		"$(use_with kerberos gss)"
 		"--with-$(use slang && echo slang || echo curses)=${EPREFIX}/usr"
-		"--enable-compressed"
-		"--enable-external-dotlock"
 		"--enable-nfs-fix"
 		"--sysconfdir=${EPREFIX}/etc/${PN}"
 		"--with-docdir=${EPREFIX}/usr/share/doc/${PN}-${PVR}"
@@ -134,11 +104,6 @@ src_configure() {
 			break
 		fi
 	done
-	if [[ -n ${ucache} ]] ; then
-		myconf+=( "--enable-hcache" )
-	else
-		myconf+=( "--disable-hcache" )
-	fi
 	for hcache in "${hcaches[@]}" ; do
 		[[ ${hcache} == ${ucache} ]] \
 			&& myconf+=( "--with-${hcache#*:}" ) \
@@ -146,21 +111,13 @@ src_configure() {
 	done
 
 	# there's no need for gnutls, ssl or sasl without socket support
-	if use pop || use imap || use smtp ; then
-		if use gnutls; then
-			myconf+=( "--with-gnutls" )
-		elif use ssl; then
-			myconf+=( "--with-ssl" )
-		fi
-		# not sure if this should be mutually exclusive with the other two
-		myconf+=( "$(use_with sasl)" )
-	else
-		myconf+=(
-			"--without-gnutls"
-			"--without-ssl"
-			"--without-sasl"
-		)
+	if use gnutls; then
+		myconf+=( "--with-gnutls" )
+	elif use ssl; then
+		myconf+=( "--with-ssl" )
 	fi
+	# not sure if this should be mutually exclusive with the other two
+	myconf+=( "$(use_with sasl)" )
 
 	if use mbox; then
 		myconf+=( "--with-mailpath=${EPREFIX}/var/spool/mail" )
