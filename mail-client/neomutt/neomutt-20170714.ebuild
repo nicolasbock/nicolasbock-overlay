@@ -157,5 +157,5 @@ src_install() {
 			|| ewarn "failed to remove files, please file a bug"
 	fi
 
-	dodoc COPYRIGHT ChangeLog OPS* README*
+	dodoc COPYRIGHT ChangeLog.md OPS* README*
 }
