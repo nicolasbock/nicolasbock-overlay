@@ -17,17 +17,12 @@ IUSE="berkdb crypt debug doc gdbm gnutls gpg idn kerberos libressl mbox nls
 	notmuch qdbm sasl selinux slang smime ssl tokyocabinet vanilla"
 
 CDEPEND="
-	!mail-client/mutt
 	app-misc/mime-types
 	nls? ( virtual/libintl )
 	tokyocabinet?  ( dev-db/tokyocabinet )
-	!tokyocabinet? (
-		qdbm?  ( dev-db/qdbm )
-		!qdbm? (
-			gdbm?  ( sys-libs/gdbm )
-			!gdbm? ( berkdb? ( >=sys-libs/db-4:= ) )
-		)
-	)
+	qdbm?  ( dev-db/qdbm )
+	gdbm?  ( sys-libs/gdbm )
+	berkdb? ( >=sys-libs/db-4:= )
 	gnutls?  ( >=net-libs/gnutls-1.0.17 )
 	!gnutls? (
 		ssl? (
@@ -77,6 +72,10 @@ src_configure() {
 		"$(use_enable notmuch)"
 		"$(use_with idn)"
 		"$(use_with kerberos gss)"
+		"$(use_with tokyocabinet tokyocabinet)"
+		"$(use_with qdbm qdbm)"
+		"$(use_with gdbm gdbm)"
+		"$(use_with berkdb bdb)"
 		"--with-$(use slang && echo slang || echo curses)=${EPREFIX}/usr"
 		"--sysconfdir=${EPREFIX}/etc/${PN}"
 		"--with-docdir=${EPREFIX}/usr/share/doc/${PN}-${PVR}"
@@ -86,27 +85,6 @@ src_configure() {
 		# arrows in index view do not show when using wchar_t
 		myconf+=( "--without-wc-funcs" )
 	fi
-
-	# mutt prioritizes gdbm over bdb, so we will too.
-	# hcache feature requires at least one database is in USE.
-	local hcaches=(
-		"tokyocabinet"
-		"qdbm"
-		"gdbm"
-		"berkdb:bdb"
-	)
-	local ucache hcache lcache
-	for hcache in "${hcaches[@]}" ; do
-		if use ${hcache%%:*} ; then
-			ucache=${hcache}
-			break
-		fi
-	done
-	for hcache in "${hcaches[@]}" ; do
-		[[ ${hcache} == ${ucache} ]] \
-			&& myconf+=( "--with-${hcache#*:}" ) \
-			|| myconf+=( "--without-${hcache#*:}" )
-	done
 
 	# there's no need for gnutls, ssl or sasl without socket support
 	if use gnutls; then
@@ -129,10 +107,10 @@ src_configure() {
 src_install() {
 	emake DESTDIR="${D}" install || die "install failed"
 	if use mbox; then
-		insinto /etc/neomutt
+		insinto /etc/${PN}
 		newins "${FILESDIR}"/Muttrc.mbox Muttrc
 	else
-		insinto /etc/neomutt
+		insinto /etc/${PN}
 		doins "${FILESDIR}"/Muttrc
 	fi
 
@@ -148,9 +126,9 @@ src_install() {
 			-e 's#in @docdir@,#at http://www.mutt.org/,#' \
 			-e "s#@sysconfdir@#${EPREFIX}/etc/${PN}#" \
 			-e "s#@bindir@#${EPREFIX}/usr/bin#" \
-			doc/mutt.man > mutt.1
-		cp doc/muttrc.man muttrc.5
-		doman mutt.1 muttrc.5
+			doc/mutt.man > neomutt.1
+		cp doc/muttrc.man neomuttrc.5
+		doman neomutt.1 neomuttrc.5
 	else
 		# nuke manpages that should be provided by an MTA, bug #177605
 		rm "${ED}"/usr/share/man/man5/{mbox,mmdf}.5 \
