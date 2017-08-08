@@ -1,0 +1,115 @@
+From cf75bfc1d66a06012cfcaedfd0a5d887dd3b980a Mon Sep 17 00:00:00 2001
+From: Nicolas Bock <nicolasbock@gmail.com>
+Date: Tue, 8 Aug 2017 13:36:20 +0200
+Subject: [PATCH] Rename mutt to neomutt
+
+---
+ Makefile.am         | 22 +++++++++++-----------
+ configure.ac        |  2 +-
+ hcache/hcachever.sh |  2 +-
+ 3 files changed, 13 insertions(+), 13 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index 5b6494e8..184d0ef7 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -3,7 +3,7 @@
+ include $(top_srcdir)/flymake.am
+ 
+ AUTOMAKE_OPTIONS = 1.6 foreign
+-EXTRA_PROGRAMS = mutt_md5 pgpewrap pgpring
++EXTRA_PROGRAMS = neomutt_md5 pgpewrap pgpring
+ 
+ # Test the .tar file by building everything
+ AM_DISTCHECK_CONFIGURE_FLAGS = \
+@@ -42,9 +42,9 @@ distdir = neo$(PACKAGE)-$(VERSION)
+ 
+ BUILT_SOURCES = conststrings.c git_ver.h keymap_alldefs.h keymap_defs.h
+ 
+-bin_PROGRAMS = mutt $(PGPAUX_TARGET)
++bin_PROGRAMS = neomutt $(PGPAUX_TARGET)
+ 
+-mutt_SOURCES = account.c addrbook.c address.h alias.c alias.h ascii.c attach.c \
++neomutt_SOURCES = account.c addrbook.c address.h alias.c alias.h ascii.c attach.c \
+ 	base64.c bcache.c body.h browser.c buffer.c buffy.c charset.c color.c \
+ 	commands.c complete.c compose.c compress.c content.h context.h copy.c \
+ 	curs_lib.c curs_main.c date.c edit.c editmsg.c enter.c enter_state.h \
+@@ -59,15 +59,15 @@ mutt_SOURCES = account.c addrbook.c address.h alias.c alias.h ascii.c attach.c \
+ 	smtp.c sort.c state.h status.c system.c thread.c thread.h url.c \
+ 	version.c where.h
+ 
+-nodist_mutt_SOURCES = $(BUILT_SOURCES)
++nodist_neomutt_SOURCES = $(BUILT_SOURCES)
+ 
+ LIBIMAP = -Limap -limap
+ LIBIMAPDEPS = $(top_srcdir)/imap/imap.h imap/libimap.a
+ 
+-mutt_LDADD = $(MUTT_LIB_OBJECTS) $(LIBOBJS) $(HCACHE_LIBS) $(NCRYPT_LIBS) \
++neomutt_LDADD = $(MUTT_LIB_OBJECTS) $(LIBOBJS) $(HCACHE_LIBS) $(NCRYPT_LIBS) \
+ 	$(LIBIMAP) $(LIBICONV) $(GPGME_LIBS) $(INTLLIBS)
+ 
+-mutt_DEPENDENCIES = $(MUTT_LIB_OBJECTS) $(LIBOBJS) $(LIBIMAPDEPS) \
++neomutt_DEPENDENCIES = $(MUTT_LIB_OBJECTS) $(LIBOBJS) $(LIBIMAPDEPS) \
+ 	$(HCACHE_DEPS) $(NCRYPT_DEPS) $(INTLDEPS)
+ 
+ DEFS=-DPKGDATADIR=\"$(pkgdatadir)\" -DSYSCONFDIR=\"$(sysconfdir)\" \
+@@ -75,7 +75,7 @@ DEFS=-DPKGDATADIR=\"$(pkgdatadir)\" -DSYSCONFDIR=\"$(sysconfdir)\" \
+ 
+ AM_CPPFLAGS=-I. -I$(top_srcdir) $(GPGME_CFLAGS)
+ 
+-EXTRA_mutt_SOURCES = browser.h mbyte.h mutt_idna.c mutt_idna.h \
++EXTRA_neomutt_SOURCES = browser.h mbyte.h mutt_idna.c mutt_idna.h \
+ 	mutt_lua.c mutt_sasl.c mutt_notmuch.c mutt_ssl.c mutt_ssl_gnutls.c \
+ 	remailer.c remailer.h resize.c sha1.c url.h utf8.c wcwidth.c
+ 
+@@ -99,9 +99,9 @@ pgpring_SOURCES = ascii.c extlib.c lib.c md5.c pgppubring.c sha1.c
+ pgpring_LDADD = $(LIBOBJS) $(NCRYPT_LIBS) $(INTLLIBS)
+ pgpring_DEPENDENCIES = $(LIBOBJS) $(NCRYPT_DEPS) $(INTLDEPS)
+ 
+-mutt_md5_SOURCES = md5.c
+-mutt_md5_CFLAGS = -DMD5UTIL
+-mutt_md5_LDADD =
++neomutt_md5_SOURCES = md5.c
++neomutt_md5_CFLAGS = -DMD5UTIL
++neomutt_md5_LDADD =
+ 
+ txt2c_SOURCES = txt2c.c
+ txt2c_LDADD =
+@@ -141,7 +141,7 @@ keymap_alldefs.h: $(srcdir)/OPS $(srcdir)/OPS.SIDEBAR $(srcdir)/OPS.NOTMUCH $(sr
+ 		$(srcdir)/OPS.MIX $(srcdir)/OPS.PGP $(srcdir)/OPS.SMIME $(srcdir)/OPS.CRYPT \
+ 		> $@
+ 
+-git_ver.h: $(mutt_SOURCES) $(SUBDIRS)
++git_ver.h: $(neomutt_SOURCES) $(SUBDIRS)
+ 	version=`git describe --dirty --abbrev=6 --match "neomutt-*" 2> /dev/null | sed -e 's/^neomutt-[0-9]\{8\}//' -e 's/g//'`; \
+ 	echo 'const char *GitVer = "'$$version'";' > git_ver.h.tmp; \
+ 	cmp -s git_ver.h.tmp git_ver.h || mv git_ver.h.tmp git_ver.h; \
+diff --git a/configure.ac b/configure.ac
+index bc88adc7..f26d34c9 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -825,7 +825,7 @@ AM_CONDITIONAL(BUILD_HC_QDBM, test "x$build_hc_qdbm" = "xyes")
+ AM_CONDITIONAL(BUILD_HC_TC,   test "x$build_hc_tc"   = "xyes")
+ dnl -- end cache --
+ 
+-MUTT_MD5="mutt_md5$EXEEXT"
++MUTT_MD5="neomutt_md5$EXEEXT"
+ 
+ AC_SUBST(MUTT_MD5)
+ AC_SUBST(MUTT_LIB_OBJECTS)
+diff --git a/hcache/hcachever.sh b/hcache/hcachever.sh
+index 733e6ca1..c35425d1 100755
+--- a/hcache/hcachever.sh
++++ b/hcache/hcachever.sh
+@@ -77,7 +77,7 @@ do
+ done
+ echo " */" >> $TMPD
+ 
+-MD5TEXT=`echo "$TEXT" | ../mutt_md5`
++MD5TEXT=`echo "$TEXT" | ../neomutt_md5`
+ echo "#define HCACHEVER 0x"`echo $MD5TEXT | cut -c-8` >> $TMPD
+ 
+ # TODO: validate we have all structs
+-- 
+2.13.0
+

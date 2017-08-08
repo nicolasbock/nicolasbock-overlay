@@ -17,6 +17,7 @@ IUSE="berkdb crypt debug doc gdbm gnutls gpg idn kerberos libressl mbox nls
 	notmuch qdbm sasl selinux slang smime ssl tokyocabinet vanilla"
 
 CDEPEND="
+	app-eselect/eselect-mutt
 	app-misc/mime-types
 	nls? ( virtual/libintl )
 	tokyocabinet?  ( dev-db/tokyocabinet )
@@ -57,6 +58,7 @@ RDEPEND="${CDEPEND}
 S="${WORKDIR}/${PN}-${P}"
 
 src_prepare() {
+	eapply "${FILESDIR}/0001-Rename-mutt-to-neomutt.patch"
 	eapply_user
 	eautoreconf
 }
