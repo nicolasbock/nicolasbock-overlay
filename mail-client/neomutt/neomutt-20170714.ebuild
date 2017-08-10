@@ -6,7 +6,6 @@ EAPI=6
 inherit autotools eutils flag-o-matic
 
 if [[ ${PV} == 99999999 ]] ; then
-	# live ebuild
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/neomutt/neomutt.git"
 	EGIT_CHECKOUT_DIR="${WORKDIR}/neomutt-${P}"
@@ -102,7 +101,6 @@ src_configure() {
 		myconf+=( "--without-wc-funcs" )
 	fi
 
-	# there's no need for gnutls, ssl or sasl without socket support
 	if use gnutls; then
 		myconf+=( "--with-gnutls" )
 	elif use ssl; then
