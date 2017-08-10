@@ -1,20 +1,29 @@
 # Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI=6
 
 inherit autotools eutils flag-o-matic
 
-DESCRIPTION="A small but very powerful text-based mail client"
+if [[ ${PV} == 99999999 ]] ; then
+	# live ebuild
+	inherit git-r3
+	EGIT_REPO_URI="https://github.com/neomutt/neomutt.git"
+	EGIT_CHECKOUT_DIR="${WORKDIR}/neomutt-${P}"
+	KEYWORDS=""
+else
+	SRC_URI="https://github.com/${PN}/${PN}/archive/${P}.tar.gz"
+	KEYWORDS="~amd64 ~x86"
+fi
+
+DESCRIPTION="Teaching an Old Dog New Tricks"
 HOMEPAGE="https://www.neomutt.org/"
-SRC_URI="https://github.com/${PN}/${PN}/archive/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
-IUSE="berkdb crypt debug doc gdbm gnutls gpg idn kerberos libressl mbox nls
-	notmuch qdbm sasl selinux slang smime ssl tokyocabinet vanilla"
+IUSE="berkdb crypt debug doc gdbm gnutls gpg idn kerberos libressl mbox
+	nls notmuch qdbm sasl selinux slang smime ssl tokyocabinet kyotocabinet
+	lmdb"
 
 CDEPEND="
 	app-eselect/eselect-mutt
@@ -24,6 +33,8 @@ CDEPEND="
 	qdbm?  ( dev-db/qdbm )
 	gdbm?  ( sys-libs/gdbm )
 	berkdb? ( >=sys-libs/db-4:= )
+	kyotocabinet? ( dev-db/kyotocabinet )
+	lmdb? ( dev-db/lmdb )
 	gnutls?  ( >=net-libs/gnutls-1.0.17 )
 	!gnutls? (
 		ssl? (
@@ -60,7 +71,7 @@ S="${WORKDIR}/${PN}-${P}"
 src_prepare() {
 	eapply "${FILESDIR}/0001-Rename-mutt-to-neomutt.patch"
 	eapply_user
-	eautoreconf
+	AT_M4DIR="m4" eautoreconf
 }
 
 src_configure() {
@@ -74,10 +85,13 @@ src_configure() {
 		"$(use_enable notmuch)"
 		"$(use_with idn)"
 		"$(use_with kerberos gss)"
-		"$(use_with tokyocabinet tokyocabinet)"
-		"$(use_with qdbm qdbm)"
-		"$(use_with gdbm gdbm)"
+		"$(use_with sasl)"
+		"$(use_with tokyocabinet)"
+		"$(use_with kyotocabinet)"
+		"$(use_with qdbm)"
+		"$(use_with gdbm)"
 		"$(use_with berkdb bdb)"
+		"$(use_with lmdb)"
 		"--with-$(use slang && echo slang || echo curses)=${EPREFIX}/usr"
 		"--sysconfdir=${EPREFIX}/etc/${PN}"
 		"--with-docdir=${EPREFIX}/usr/share/doc/${PN}-${PVR}"
@@ -94,8 +108,6 @@ src_configure() {
 	elif use ssl; then
 		myconf+=( "--with-ssl" )
 	fi
-	# not sure if this should be mutually exclusive with the other two
-	myconf+=( "$(use_with sasl)" )
 
 	if use mbox; then
 		myconf+=( "--with-mailpath=${EPREFIX}/var/spool/mail" )
@@ -103,11 +115,11 @@ src_configure() {
 		myconf+=( "--with-homespool=Maildir" )
 	fi
 
-	econf "${myconf[@]}" || die "configure failed"
+	econf "${myconf[@]}"
 }
 
 src_install() {
-	emake DESTDIR="${D}" install || die "install failed"
+	emake DESTDIR="${D}" install
 	if use mbox; then
 		insinto /etc/${PN}
 		newins "${FILESDIR}"/Muttrc.mbox Muttrc
@@ -117,19 +129,19 @@ src_install() {
 	fi
 
 	# A newer file is provided by app-misc/mime-types. So we link it.
-	rm "${ED}"/etc/${PN}/mime.types
+	rm "${ED}"/etc/${PN}/mime.types || die
 	dosym /etc/mime.types /etc/${PN}/mime.types
 
 	# A man-page is always handy, so fake one
 	if use !doc; then
-		emake -C doc DESTDIR="${D}" muttrc.man || die
+		emake -C doc DESTDIR="${D}" muttrc.man
 		# make the fake slightly better, bug #413405
-		sed -e 's#@docdir@/manual.txt#http://www.mutt.org/doc/devel/manual.html#' \
+		sed -e 's#@docdir@/manual.txt#http://www.mutt.org/doc/manual/#' \
 			-e 's#in @docdir@,#at http://www.mutt.org/,#' \
 			-e "s#@sysconfdir@#${EPREFIX}/etc/${PN}#" \
 			-e "s#@bindir@#${EPREFIX}/usr/bin#" \
-			doc/mutt.man > neomutt.1
-		cp doc/muttrc.man neomuttrc.5
+			doc/mutt.man > neomutt.1 || die
+		cp doc/muttrc.man neomuttrc.5 || die
 		doman neomutt.1 neomuttrc.5
 	else
 		# nuke manpages that should be provided by an MTA, bug #177605
@@ -137,5 +149,5 @@ src_install() {
 			|| ewarn "failed to remove files, please file a bug"
 	fi
 
-	dodoc COPYRIGHT ChangeLog.md OPS* README*
+	dodoc COPYRIGHT ChangeLog* OPS* README*
 }
