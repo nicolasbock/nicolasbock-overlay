@@ -20,12 +20,11 @@ HOMEPAGE="https://www.neomutt.org/"
 
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="berkdb crypt debug doc gdbm gnutls gpg idn kerberos libressl mbox
-	nls notmuch qdbm sasl selinux slang smime ssl tokyocabinet kyotocabinet
-	lmdb"
+IUSE="berkdb crypt debug doc gdbm gnutls gpg idn kerberos kyotocabinet
+	libressl lmdb mbox nls notmuch qdbm sasl selinux slang smime ssl symlink
+	tokyocabinet"
 
 CDEPEND="
-	app-eselect/eselect-mutt
 	app-misc/mime-types
 	nls? ( virtual/libintl )
 	tokyocabinet?  ( dev-db/tokyocabinet )
@@ -118,6 +117,7 @@ src_configure() {
 
 src_install() {
 	emake DESTDIR="${D}" install
+	[[ $(use symlink) ]] && dosym neomutt mutt
 	if use mbox; then
 		insinto /etc/${PN}
 		newins "${FILESDIR}"/Muttrc.mbox Muttrc
