@@ -117,7 +117,7 @@ src_configure() {
 
 src_install() {
 	emake DESTDIR="${D}" install
-	use symlink && dosym mutt /usr/bin/neomutt
+	use symlink && dosym neomutt /usr/bin/mutt
 	if use mbox; then
 		insinto /etc/${PN}
 		newins "${FILESDIR}"/Muttrc.mbox Muttrc
