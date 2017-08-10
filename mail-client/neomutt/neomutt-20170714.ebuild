@@ -21,7 +21,7 @@ HOMEPAGE="https://www.neomutt.org/"
 LICENSE="GPL-2"
 SLOT="0"
 IUSE="berkdb crypt debug doc gdbm gnutls gpg idn kerberos kyotocabinet
-	libressl lmdb mbox nls notmuch qdbm sasl selinux slang smime ssl symlink
+	libressl lmdb mbox nls notmuch qdbm sasl selinux slang smime ssl +symlink
 	tokyocabinet"
 
 CDEPEND="
