@@ -1,6 +1,5 @@
 # Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI=6
 
@@ -14,11 +13,12 @@ EGIT_BRANCH="master"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS=""
-IUSE="test threads"
+IUSE="mpi openmp test"
 
 DEPEND="
 	virtual/blas
 	virtual/lapack
+	mpi? ( virtual/mpi )
 "
 RDEPEND="${DEPEND}"
 
@@ -26,8 +26,9 @@ src_configure() {
 	local my_cflags="-std=c99"
 	local mycmakeargs=(
 		-DBUILD_SHARED_LIBS=yes
-		-DBML_OPENMP=$(usex threads)
+		-DBML_OPENMP=$(usex openmp)
 		-DBML_TESTING=$(usex test)
+		-DBML_MPI=$(usex mpi)
 	)
 	CFLAGS="${CFLAGS} ${my_cflags}" \
 		CXXFLAGS="${CXXFLAGS} ${my_cflags}" \
