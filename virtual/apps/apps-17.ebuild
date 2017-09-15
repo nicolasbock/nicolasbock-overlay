@@ -62,7 +62,7 @@ RDEPEND="
 	dev-vcs/qgit
 	gnome-base/gnome
 	gnome-extra/gnome-clocks
-	mail-client/neomutt[gpg,mbox,notmuch,sasl,smime]
+	mail-client/neomutt[gpg,notmuch,sasl,smime]
 	media-fonts/arphicfonts
 	media-fonts/bitstream-cyberbit
 	media-fonts/droid
