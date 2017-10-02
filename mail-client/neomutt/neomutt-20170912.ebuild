@@ -54,7 +54,7 @@ RDEPEND="${CDEPEND}
 S="${WORKDIR}/${PN}-${P}"
 
 src_prepare() {
-	eapply "${FILESDIR}/0001-Rename-mutt-to-neomutt.patch"
+	eapply "${FILESDIR}/0001-Rename-mutt-to-neomutt-${PV}.patch"
 	eapply_user
 	AT_M4DIR="m4" eautoreconf
 }
@@ -105,16 +105,16 @@ src_install() {
 
 	## A man-page is always handy, so fake one
 	if use !doc; then
-		emake -C doc neomuttrc.man
+		emake -C doc muttrc.man
 		# make the fake slightly better, bug #413405
 		sed -e 's#@docdir@/manual.txt#http://www.neomutt.org/guide#' \
 			-e 's#in @docdir@,#at http://www.neomutt.org/,#' \
 			-e "s#@sysconfdir@#${EPREFIX}/etc/${PN}#" \
 			-e "s#@bindir@#${EPREFIX}/usr/bin#" \
 			doc/mutt.man > neomutt.1 || die
-		cp doc/neomuttrc.man neomuttrc.5 || die
+		cp doc/muttrc.man neomuttrc.5 || die
 		doman neomutt.1 neomuttrc.5
 	fi
 
-	dodoc COPYRIGHT ChangeLog* OPS* README*
+	dodoc COPYRIGHT LICENSE* ChangeLog* README*
 }

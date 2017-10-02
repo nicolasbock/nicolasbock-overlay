@@ -54,7 +54,7 @@ RDEPEND="${CDEPEND}
 S="${WORKDIR}/${PN}-${P}"
 
 src_prepare() {
-	eapply "${FILESDIR}/0001-Rename-mutt-to-neomutt.patch"
+	eapply "${FILESDIR}/0001-Rename-mutt-to-neomutt-${PV}.patch"
 	eapply_user
 	AT_M4DIR="m4" eautoreconf
 }
