@@ -1,4 +1,4 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -35,5 +35,5 @@ RDEPEND="
 	sys-kernel/linux-firmware
 	sys-kernel/vanilla-sources
 	sys-process/lsof
-	sys-process/systemd-cron[python_single_target_python3_4]
+	sys-process/systemd-cron
 	"
