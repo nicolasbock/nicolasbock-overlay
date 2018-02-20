@@ -30,7 +30,7 @@ RDEPEND="
 	app-office/libreoffice-bin
 	app-portage/repoman
 	app-text/aspell[l10n_de,l10n_en]
-	app-text/texlive[epspdf,extra,graphics,metapost,pstricks,publishers,science,xetex,xindy]
+	app-text/texlive[epspdf,extra,graphics,metapost,pstricks,publishers,science,xetex]
 	app-text/tree
 	>=app-vim/command-t-3.0
 	app-vim/extra-syntax
