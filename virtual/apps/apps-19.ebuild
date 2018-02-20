@@ -11,7 +11,6 @@ IUSE=""
 
 RDEPEND="
 	app-admin/lnav
-	app-crypt/kbfs
 	app-crypt/keybase
 	app-doc/doxygen
 	app-editors/gedit-plugins[git,terminal]
