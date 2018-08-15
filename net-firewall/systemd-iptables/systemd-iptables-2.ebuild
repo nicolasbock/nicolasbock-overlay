@@ -24,4 +24,5 @@ pkg_preinst() {
 	doexe "${FILESDIR}/flush-iptables.sh"
 	insinto "/etc/firewall"
 	doins "${FILESDIR}/iptables.rules"
+	doins "${FILESDIR}/ip6tables.rules"
 }
