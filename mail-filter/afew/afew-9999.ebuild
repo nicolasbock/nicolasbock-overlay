@@ -25,6 +25,10 @@ RDEPEND="
 
 DOCS=( "README.rst" )
 
+PATCHES=(
+  "${FILESDIR}/0001-Quote-folder-names-in-search-query.patch"
+)
+
 src_prepare() {
 	distutils-r1_src_prepare
 }

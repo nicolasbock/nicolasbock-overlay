@@ -1,0 +1,29 @@
+From afd057f3c7cbcf03d53a02ef622f026dc6747880 Mon Sep 17 00:00:00 2001
+From: Nicolas Bock <nicolasbock@gmail.com>
+Date: Tue, 8 Jan 2019 06:08:19 -0700
+Subject: [PATCH] Quote folder names in search query
+
+When using folder names containing whitespace characters (see PR #206)
+the folder part of the notmuch search query needs to be quoted.
+
+Signed-off-by: Nicolas Bock <nicolasbock@gmail.com>
+---
+ afew/MailMover.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/afew/MailMover.py b/afew/MailMover.py
+index f3c749f..8d5045d 100644
+--- a/afew/MailMover.py
++++ b/afew/MailMover.py
+@@ -22,7 +22,7 @@ class MailMover(Database):
+     def __init__(self, max_age=0, rename = False, dry_run=False):
+         super(MailMover, self).__init__()
+         self.db = notmuch.Database(self.db_path)
+-        self.query = 'folder:{folder} AND {subquery}'
++        self.query = 'folder:"{folder}" AND {subquery}'
+         if max_age:
+             days = timedelta(int(max_age))
+             start = date.today() - days
+-- 
+2.19.2
+
