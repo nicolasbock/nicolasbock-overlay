@@ -21,7 +21,6 @@ RDEPEND="
 	app-shells/dash
 	net-analyzer/iftop
 	net-analyzer/traceroute
-	net-firewall/ebtables
 	net-misc/iputils[arping,clockdiff,idn,rdisc,tftpd,tracepath]
 	net-misc/networkmanager[resolvconf]
 	net-vpn/networkmanager-openconnect
