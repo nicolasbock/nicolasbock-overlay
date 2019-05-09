@@ -1,0 +1,35 @@
+# IPv4
+
+# Create filter table
+add table ip filter
+
+# Create chains
+add chain ip filter INPUT { type filter hook input priority 0; policy drop; }
+add chain ip filter FORWARD { type filter hook forward priority 0; policy accept; }
+add chain ip filter OUTPUT { type filter hook output priority 0; policy accept; }
+
+# Create rules
+add rule ip filter INPUT iifname "lo" counter accept
+add rule ip filter INPUT ct state new tcp dport 22 counter log prefix "ssh[in]: "
+add rule ip filter INPUT ct state new tcp dport 22 counter accept
+add rule ip filter INPUT ip protocol icmp counter log prefix "ping: "
+add rule ip filter INPUT ip protocol icmp counter accept
+add rule ip filter INPUT ct state related,established counter accept
+add rule ip filter INPUT ct state new counter log prefix "blocked: "
+
+# IPv6
+
+# Create filter table
+add table ip6 filter
+
+# Create chains
+add chain ip6 filter INPUT { type filter hook input priority 0; policy drop; }
+add chain ip6 filter FORWARD { type filter hook forward priority 0; policy accept; }
+add chain ip6 filter OUTPUT { type filter hook output priority 0; policy accept; }
+
+# Create rules
+add rule ip6 filter INPUT iifname "lo" counter accept
+add rule ip6 filter INPUT meta l4proto ipv6-icmp counter log prefix "ping6: "
+add rule ip6 filter INPUT meta l4proto ipv6-icmp counter accept
+add rule ip6 filter INPUT ct state related,established counter accept
+add rule ip6 filter INPUT ct state new counter log prefix "blocked6: "
