@@ -4,7 +4,7 @@
 EAPI=7
 
 DISTUTILS_SINGLE_IMPL=1
-PYTHON_COMPAT=( python{3_4,3_5,3_6} )
+PYTHON_COMPAT=( python{3_5,3_6,3_7} )
 
 inherit distutils-r1 git-r3
 
@@ -26,6 +26,10 @@ RDEPEND="
 DOCS=( "README.rst" )
 
 src_prepare() {
+	sed -r \
+		-e "s/^([[:space:]]+)use_scm_version=.*,$/\1version='${PV}',/" \
+		-e "/^([[:space:]]+)setup_requires=.*,$/d" \
+		-i setup.py || die
 	distutils-r1_src_prepare
 }
 
