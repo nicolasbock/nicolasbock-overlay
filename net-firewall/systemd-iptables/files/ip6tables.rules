@@ -6,6 +6,9 @@
 
 -A INPUT -i lo -j ACCEPT
 
+-A INPUT -p tcp -m state --state NEW --dport 22 -j LOG --log-prefix "ssh[in]: "
+-A INPUT -p tcp -m state --state NEW --dport 22 -j ACCEPT
+
 -A INPUT -p icmpv6 -j LOG --log-prefix "ping: "
 -A INPUT -p icmpv6 -j ACCEPT
 
